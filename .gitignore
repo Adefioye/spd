@@ -174,3 +174,6 @@ cython_debug/
 
 **/*.db
 **/*.db*
+
+# Results and model checkpoints
+spd_out/
