@@ -181,3 +181,6 @@ cython_debug/
 *.schema.json
 
 .claude/worktrees
+
+# Results and model checkpoints
+spd_out/
