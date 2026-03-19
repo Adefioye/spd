@@ -1,0 +1,19 @@
+dataset:
+  dictionary:
+    num_features: 16
+    hidden_dim: 32
+    seed: 0
+    initializer: orthogonal
+  generator:
+    default_probability: 0.25
+    mean_firing_magnitudes: 1.0
+    std_firing_magnitudes: 0.05
+    seed: 0
+d_sae: 16
+batch_size: 1024
+steps: 5000
+lr: 0.0003
+l1_coefficient: 0.05
+eval_num_samples: 10000
+seed: 0
+run_name: sae_orthogonal

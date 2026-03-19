@@ -1,0 +1,15 @@
+feature_probability: 0.05
+batch_size: 4096
+steps: 5000
+seed: 0
+lr_schedule:
+  start_val: 0.001
+  fn_type: cosine
+  warmup_pct: 0.0
+  final_val_frac: 0.0
+data_generation_type: exactly_one_active
+n_features: 5
+n_hidden: 2
+n_hidden_layers: 0
+tied_weights: true
+init_bias_to_zero: true

@@ -1,0 +1,40 @@
+dataset:
+  dictionary:
+    num_features: 32
+    hidden_dim: 28
+    seed: 0
+    initializer: random
+  generator:
+    default_probability: 0.1
+    zipf_exponent: 1.2
+    max_prob: 0.25
+    min_prob: 0.01
+    hierarchy_edges:
+      - [0, 1]
+      - [0, 2]
+      - [0, 3]
+    correlation_strength: 0.2
+    seed: 0
+resid_mlp_model_config:
+  n_features: 32
+  d_embed: 28
+  d_mlp: 24
+  n_layers: 2
+  act_fn_name: relu
+  in_bias: false
+  out_bias: false
+label_type: act_plus_resid
+loss_type: readoff
+fixed_embedding: feature_dictionary
+freeze_embedding: true
+batch_size: 2048
+steps: 8000
+print_freq: 100
+lr_schedule:
+  start_val: 0.002
+  fn_type: cosine
+  warmup_pct: 0.0
+  final_val_frac: 0.0
+n_eval_batches: 20
+seed: 0
+run_name: resid_mlp_dictionary_superposed
