@@ -184,3 +184,6 @@ cython_debug/
 
 # Results and model checkpoints
 spd_out/
+
+# Folders not in use
+docs/
