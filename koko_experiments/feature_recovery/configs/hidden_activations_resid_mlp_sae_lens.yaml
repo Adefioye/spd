@@ -1,0 +1,62 @@
+run_name: hidden_activations_resid_mlp_sae_lens
+seed: 0
+synthetic:
+  stage: hidden_activations
+  dictionary:
+    num_features: 24
+    hidden_dim: 16
+    initializer: orthogonal
+    seed: 0
+  generator:
+    zipf_exponent: 1.0
+    max_prob: 0.25
+    min_prob: 0.02
+    mean_firing_magnitudes: 1.0
+    std_firing_magnitudes: 0.1
+    use_random_correlation_matrix: true
+    correlation_positive_ratio: 0.7
+    correlation_uncorrelated_ratio: 0.5
+    min_correlation_strength: 0.1
+    max_correlation_strength: 0.3
+    hierarchy_edges:
+      - [0, 1]
+      - [0, 2]
+      - [1, 3]
+      - [1, 4]
+    mutually_exclusive_groups:
+      - [1, 2]
+      - [3, 4]
+    seed: 0
+sae:
+  enabled: true
+  d_sae: 24
+  l1_coefficient: 0.1
+  training_samples: 200000
+  batch_size: 1024
+  lr: 0.0003
+  eval_num_samples: 20000
+target:
+  model_type: resid_mlp
+  resid_mlp_model_config:
+    n_features: 16
+    d_embed: 32
+    d_mlp: 32
+    n_layers: 2
+    act_fn_name: relu
+    in_bias: false
+    out_bias: false
+  batch_size: 1024
+  steps: 6000
+  print_freq: 200
+  lr_schedule:
+    start_val: 0.001
+    fn_type: cosine
+    warmup_pct: 0.0
+    final_val_frac: 0.0
+  label_type: act_plus_resid
+  loss_type: readoff
+  fixed_embedding: learned
+analysis:
+  enabled: true
+  input_magnitude: 1.0
+  sampling: lower_leaky

@@ -4,6 +4,13 @@ from pathlib import Path
 
 import torch
 from jaxtyping import Float
+from sae_lens import SAE
+from sae_lens.synthetic import (
+    ActivationGenerator,
+    FeatureDictionary,
+    SyntheticDataEvalResult,
+    eval_sae_on_synthetic_data,
+)
 from torch import Tensor
 
 from spd.plotting import get_single_feature_causal_importances
@@ -22,12 +29,22 @@ class DictionaryRecoveryMetrics:
 
 @dataclass
 class SAEEvaluation:
-    reconstruction_mse: float
+    explained_variance: float
     true_l0: float
     learned_l0: float
     dead_latents: int
     shrinkage: float
+    mcc: float
+    uniqueness: float
     dictionary_recovery: DictionaryRecoveryMetrics
+
+
+@dataclass
+class SPDEvaluation:
+    best_layer: str
+    best_direction_role: str
+    dictionary_recovery: DictionaryRecoveryMetrics
+    ci_summary: dict[str, dict[str, float]]
 
 
 @dataclass
@@ -76,25 +93,32 @@ def compute_dictionary_recovery_metrics(
     )
 
 
-def evaluate_sae(
-    sae: torch.nn.Module,
-    hidden: Float[Tensor, "batch hidden_dim"],
-    true_latents: Float[Tensor, "batch num_features"],
-    true_dictionary: Float[Tensor, "num_features hidden_dim"],
+def evaluate_sae_baseline(
+    sae: SAE,
+    feature_dict: FeatureDictionary,
+    activations_generator: ActivationGenerator,
+    eval_num_samples: int,
+    batch_size: int,
 ) -> SAEEvaluation:
-    with torch.no_grad():
-        recon, codes = sae(hidden)
-    d_recovery = compute_dictionary_recovery_metrics(
-        learned_vectors=sae.decoder.weight.detach().T,
-        true_vectors=true_dictionary,
+    eval_result: SyntheticDataEvalResult = eval_sae_on_synthetic_data(
+        sae=sae,
+        feature_dict=feature_dict,
+        activations_generator=activations_generator,
+        num_samples=eval_num_samples,
+        batch_size=batch_size,
     )
-    shrinkage = float((recon.norm(dim=-1) / hidden.norm(dim=-1).clamp_min(1e-8)).mean().item())
+    d_recovery = compute_dictionary_recovery_metrics(
+        learned_vectors=sae.W_dec.detach(),
+        true_vectors=feature_dict.feature_vectors.detach(),
+    )
     return SAEEvaluation(
-        reconstruction_mse=float(torch.mean((recon - hidden) ** 2).item()),
-        true_l0=float((true_latents > 0).float().sum(dim=-1).mean().item()),
-        learned_l0=float((codes > 0).float().sum(dim=-1).mean().item()),
-        dead_latents=int(((codes > 0).float().sum(dim=0) == 0).sum().item()),
-        shrinkage=shrinkage,
+        explained_variance=eval_result.explained_variance,
+        true_l0=eval_result.true_l0,
+        learned_l0=eval_result.sae_l0,
+        dead_latents=eval_result.dead_latents,
+        shrinkage=eval_result.shrinkage,
+        mcc=eval_result.mcc,
+        uniqueness=eval_result.uniqueness,
         dictionary_recovery=d_recovery,
     )
 
@@ -155,6 +179,35 @@ def singleton_feature_ci_summary(
             ),
         }
     return summary
+
+
+def summarize_spd_evaluation(
+    component_model: torch.nn.Module,
+    true_dictionary: Float[Tensor, "num_features hidden_dim"],
+    input_magnitude: float,
+    sampling: str,
+) -> SPDEvaluation:
+    layer_metrics = analyze_component_model_directions(component_model, true_dictionary)
+    assert layer_metrics, "No SPD component directions matched the observed-space dimensionality"
+    best_layer_metric = max(layer_metrics, key=lambda metric: metric.mean_matched_cosine)
+    ci_summary = singleton_feature_ci_summary(
+        component_model=component_model,
+        n_features=true_dictionary.shape[0],
+        input_magnitude=input_magnitude,
+        sampling=sampling,
+    )
+    return SPDEvaluation(
+        best_layer=best_layer_metric.layer_name,
+        best_direction_role=best_layer_metric.direction_role,
+        dictionary_recovery=DictionaryRecoveryMetrics(
+            mean_matched_cosine=best_layer_metric.mean_matched_cosine,
+            coverage_at_095=best_layer_metric.coverage_at_095,
+            coverage_at_099=best_layer_metric.coverage_at_099,
+            fragmentation=best_layer_metric.fragmentation,
+            merging=best_layer_metric.merging,
+        ),
+        ci_summary=ci_summary,
+    )
 
 
 def save_metrics_json(data: dict, path: Path) -> None:
