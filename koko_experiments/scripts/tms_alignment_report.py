@@ -5,8 +5,6 @@ Usage:
     uv run python koko_experiments/scripts/tms_alignment_report.py --run-dir "$SPD_OUT_DIR"/spd/s-xxxx
 """
 
-from __future__ import annotations
-
 import argparse
 import json
 import re
@@ -90,10 +88,9 @@ def _build_models(run_dir: Path, checkpoint_path: Path) -> tuple[TMSModel, Compo
     component_model = ComponentModel(
         target_model=target_model,
         module_path_info=module_path_info,
-        ci_fn_type=run_config.ci_fn_type,
-        ci_fn_hidden_dims=run_config.ci_fn_hidden_dims,
-        pretrained_model_output_attr=run_config.pretrained_model_output_attr,
+        ci_config=run_config.ci_config,
         sigmoid_type=run_config.sigmoid_type,
+        pretrained_model_output_attr=run_config.pretrained_model_output_attr,
     )
 
     component_state = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
@@ -128,14 +125,6 @@ def _calc_layer_metrics(
     matched_component_norms = matched_component_columns.norm(dim=-1)
     target_column_norms = target_columns.norm(dim=-1)
 
-    leakage_vals = []
-    for feature_idx, component_idx in enumerate(max_idx.tolist()):
-        norms_for_component = component_column_vectors[component_idx].norm(dim=-1)
-        total_norm = norms_for_component.sum().item()
-        own_norm = norms_for_component[feature_idx].item()
-        leakage = (total_norm - own_norm) / (total_norm + eps)
-        leakage_vals.append(leakage)
-
     component_strength = component_u.norm(dim=1) * component_v.norm(dim=0)
     threshold = 0.01 * component_strength.max().item() if component_strength.numel() > 0 else 0.0
     effective_components = int((component_strength > threshold).sum().item())
@@ -147,12 +136,8 @@ def _calc_layer_metrics(
         "MMCS": max_cos.mean().item(),
         "ML2R": l2_ratio.mean().item(),
         "faithfulness_mse": faithfulness_mse,
-        "coverage@0.99": (max_cos >= 0.99).float().mean().item(),
-        "coverage@0.95": (max_cos >= 0.95).float().mean().item(),
-        "scale_mae": torch.mean(torch.abs(l2_ratio - 1.0)).item(),
         "matched_component_norm_mean": matched_component_norms.mean().item(),
         "target_column_norm_mean": target_column_norms.mean().item(),
-        "off_target_leakage": float(sum(leakage_vals) / len(leakage_vals)),
         "effective_components@1pct_max_strength": float(effective_components),
     }
 
