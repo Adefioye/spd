@@ -126,6 +126,7 @@ class FeatureDictionary(SAEFeatureDictionary):
         )
         feature_dict.feature_vectors.data.copy_(feature_vectors)
         feature_dict.bias.data.zero_()
+        feature_dict.requires_grad_(False)
         return feature_dict
 
     def encode(self, latents: Tensor) -> Tensor:
@@ -193,4 +194,4 @@ def sample_observed_activations(
 ) -> tuple[Tensor, Tensor]:
     latents = activation_generator.sample(batch_size)
     observed = feature_dict(latents)
-    return observed, latents
+    return observed.detach(), latents.detach()

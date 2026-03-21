@@ -125,8 +125,8 @@ def materialize_observed_dataset(
     while remaining > 0:
         current_chunk = min(chunk_size, remaining)
         observed, labels = dataset.generate_batch(current_chunk)
-        observed_chunks.append(observed.cpu())
-        label_chunks.append(labels.cpu())
+        observed_chunks.append(observed.detach().cpu())
+        label_chunks.append(labels.detach().cpu())
         remaining -= current_chunk
     return TensorDataset(torch.cat(observed_chunks, dim=0), torch.cat(label_chunks, dim=0))
 
