@@ -80,6 +80,8 @@ class TargetTrainingConfig(BaseConfig):
     model_type: Literal["tms", "resid_mlp"]
     tms_model_config: TMSModelConfig | None = None
     resid_mlp_model_config: ResidMLPModelConfig | None = None
+    train_num_samples: PositiveInt | None = None
+    eval_num_samples: PositiveInt | None = None
     batch_size: PositiveInt = 1024
     steps: PositiveInt = 5_000
     print_freq: PositiveInt = 100

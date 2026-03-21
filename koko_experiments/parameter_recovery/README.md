@@ -78,6 +78,13 @@ python -m koko_experiments.parameter_recovery.run_parameter_recovery \
   koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/resid_mlp.yaml
 ```
 
+Target training can now use either:
+
+- a streamed synthetic distribution when `target.train_num_samples` is omitted
+- a finite materialized dataset when `target.train_num_samples` is set
+
+Use `target.eval_num_samples` the same way for evaluation. This only changes target-model training and eval. The SPD stage still uses the synthetic distribution defined by the SPD config.
+
 ## Output layout
 
 By default, outputs are written under `SPD_OUT_DIR`:

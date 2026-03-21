@@ -11,6 +11,7 @@ if str(REPO_ROOT) not in sys.path:
 
 import torch
 from torch import Tensor
+from torch.utils.data import DataLoader, TensorDataset
 
 from spd.configs import Config
 from spd.experiments.resid_mlp.models import ResidMLP
@@ -30,6 +31,7 @@ from koko_experiments.parameter_recovery.configs import (
 )
 from koko_experiments.parameter_recovery.feature_datasets import (
     ObservedActivationDataset,
+    materialize_observed_dataset,
 )
 from koko_experiments.parameter_recovery.metrics import (
     load_spd_loss_summary,
@@ -148,21 +150,63 @@ def _build_target_model(
     return model
 
 
+def _make_target_train_loader(
+    dataset: ObservedActivationDataset,
+    config: ParameterRecoveryExperimentConfig,
+) -> DatasetGeneratedDataLoader | DataLoader[tuple[Tensor, Tensor]]:
+    if config.target.train_num_samples is None:
+        return DatasetGeneratedDataLoader(
+            dataset,
+            batch_size=config.target.batch_size,
+            shuffle=False,
+        )
+    finite_dataset = materialize_observed_dataset(
+        dataset=dataset,
+        num_samples=config.target.train_num_samples,
+        chunk_size=config.target.batch_size,
+    )
+    return DataLoader(
+        finite_dataset,
+        batch_size=config.target.batch_size,
+        shuffle=True,
+    )
+
+
+def _iter_eval_batches(
+    dataset: ObservedActivationDataset,
+    config: ParameterRecoveryExperimentConfig,
+) -> list[tuple[Tensor, Tensor]]:
+    if config.target.eval_num_samples is None:
+        return [dataset.generate_batch(config.target.batch_size) for _ in range(10)]
+    finite_eval_dataset = materialize_observed_dataset(
+        dataset=dataset,
+        num_samples=config.target.eval_num_samples,
+        chunk_size=config.target.batch_size,
+    )
+    eval_loader = DataLoader(
+        finite_eval_dataset,
+        batch_size=config.target.batch_size,
+        shuffle=False,
+    )
+    return list(eval_loader)
+
+
 def _train_tms_target(
     model: TMSModel,
     dataset: ObservedActivationDataset,
     config: ParameterRecoveryExperimentConfig,
     device: str,
 ) -> dict[str, float]:
-    dataloader = DatasetGeneratedDataLoader(
-        dataset,
-        batch_size=config.target.batch_size,
-        shuffle=False,
-    )
+    dataloader = _make_target_train_loader(dataset, config)
     optimizer = torch.optim.AdamW(model.parameters(), lr=config.target.lr_schedule.start_val)
     eval_losses: list[float] = []
-
-    for step, (observed, labels) in zip(range(config.target.steps), dataloader, strict=False):
+    data_iter = iter(dataloader)
+    for step in range(config.target.steps):
+        try:
+            observed, labels = next(data_iter)
+        except StopIteration:
+            data_iter = iter(dataloader)
+            observed, labels = next(data_iter)
         current_lr = get_scheduled_value(step, config.target.steps, config.target.lr_schedule)
         for param_group in optimizer.param_groups:
             param_group["lr"] = current_lr
@@ -176,13 +220,15 @@ def _train_tms_target(
         if step % config.target.print_freq == 0 or step + 1 == config.target.steps:
             print(f"step={step:05d} loss={loss.item():.6f} lr={current_lr:.6f}")
 
-    for _ in range(10):
-        observed, labels = dataset.generate_batch(config.target.batch_size)
+    for observed, labels in _iter_eval_batches(dataset, config):
         with torch.no_grad():
-            eval_losses.append(
-                float(torch.mean((model(observed.to(device)) - labels.to(device).abs()) ** 2).item())
-            )
-    return {"mean_eval_loss": sum(eval_losses) / len(eval_losses)}
+            eval_losses.append(float(torch.mean((model(observed.to(device)) - labels.to(device).abs()) ** 2).item()))
+    summary = {"mean_eval_loss": sum(eval_losses) / len(eval_losses)}
+    if config.target.train_num_samples is not None:
+        summary["train_num_samples"] = float(config.target.train_num_samples)
+    if config.target.eval_num_samples is not None:
+        summary["eval_num_samples"] = float(config.target.eval_num_samples)
+    return summary
 
 
 def _resid_loss(
@@ -203,11 +249,7 @@ def _train_resid_target(
     config: ParameterRecoveryExperimentConfig,
     device: str,
 ) -> dict[str, float]:
-    dataloader = DatasetGeneratedDataLoader(
-        dataset,
-        batch_size=config.target.batch_size,
-        shuffle=False,
-    )
+    dataloader = _make_target_train_loader(dataset, config)
     trainable_params = [param for param in model.parameters() if param.requires_grad]
     optimizer = torch.optim.AdamW(
         trainable_params,
@@ -216,7 +258,13 @@ def _train_resid_target(
     )
     eval_losses: list[float] = []
 
-    for step, (observed, labels) in zip(range(config.target.steps), dataloader, strict=False):
+    data_iter = iter(dataloader)
+    for step in range(config.target.steps):
+        try:
+            observed, labels = next(data_iter)
+        except StopIteration:
+            data_iter = iter(dataloader)
+            observed, labels = next(data_iter)
         current_lr = get_scheduled_value(step, config.target.steps, config.target.lr_schedule)
         for param_group in optimizer.param_groups:
             param_group["lr"] = current_lr
@@ -230,14 +278,18 @@ def _train_resid_target(
         if step % config.target.print_freq == 0 or step + 1 == config.target.steps:
             print(f"step={step:05d} loss={loss.item():.6f} lr={current_lr:.6f}")
 
-    for _ in range(10):
-        observed, labels = dataset.generate_batch(config.target.batch_size)
+    for observed, labels in _iter_eval_batches(dataset, config):
         with torch.no_grad():
             outputs = model(observed.to(device), return_residual=config.target.loss_type == "resid")
             eval_losses.append(
                 float(_resid_loss(model, outputs, labels.to(device), config.target.loss_type).item())
             )
-    return {"mean_eval_loss": sum(eval_losses) / len(eval_losses)}
+    summary = {"mean_eval_loss": sum(eval_losses) / len(eval_losses)}
+    if config.target.train_num_samples is not None:
+        summary["train_num_samples"] = float(config.target.train_num_samples)
+    if config.target.eval_num_samples is not None:
+        summary["eval_num_samples"] = float(config.target.eval_num_samples)
+    return summary
 
 
 def _save_target_bundle(

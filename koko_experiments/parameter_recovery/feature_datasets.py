@@ -1,9 +1,10 @@
 from typing import Literal, override
 
+import torch
 import torch.nn.functional as F
 from jaxtyping import Float
 from torch import Tensor
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, TensorDataset
 
 from .synthetic import ActivationGenerator, FeatureDictionary, sample_observed_activations
 
@@ -111,6 +112,23 @@ class ObservedActivationDataset(
             act_fn_name=self.act_fn_name,
         )
         return observed, labels.to(self.device)
+
+
+def materialize_observed_dataset(
+    dataset: ObservedActivationDataset,
+    num_samples: int,
+    chunk_size: int,
+) -> TensorDataset:
+    observed_chunks: list[Tensor] = []
+    label_chunks: list[Tensor] = []
+    remaining = num_samples
+    while remaining > 0:
+        current_chunk = min(chunk_size, remaining)
+        observed, labels = dataset.generate_batch(current_chunk)
+        observed_chunks.append(observed.cpu())
+        label_chunks.append(labels.cpu())
+        remaining -= current_chunk
+    return TensorDataset(torch.cat(observed_chunks, dim=0), torch.cat(label_chunks, dim=0))
 
 
 class DictionaryFeatureDataset(
