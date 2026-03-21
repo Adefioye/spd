@@ -1,5 +1,5 @@
 # SPD config for paper-style exp_00_axis_aligned_tms_5_2
-wandb_project: null
+wandb_project: spd_tms_5_2
 wandb_run_name: null
 wandb_run_name_prefix: ""
 
@@ -7,7 +7,6 @@ seed: 0
 autocast_bf16: false
 n_mask_samples: 1
 ci_config:
-  mode: layerwise
   fn_type: mlp
   hidden_dims: [16]
 sigmoid_type: leaky_hard
