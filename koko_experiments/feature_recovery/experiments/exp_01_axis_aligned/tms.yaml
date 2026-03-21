@@ -12,14 +12,6 @@ synthetic:
     mean_firing_magnitudes: 1.0
     std_firing_magnitudes: 0.05
     seed: 0
-sae:
-  enabled: true
-  d_sae: 8
-  l1_coefficient: 0.1
-  training_samples: 100000
-  batch_size: 1024
-  lr: 0.0003
-  eval_num_samples: 20000
 target:
   model_type: tms
   tms_model_config:
@@ -40,7 +32,6 @@ target:
   label_type: identity
   loss_type: readoff
 spd:
-  enabled: true
   spd_config_path: koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/spd_tms.yaml
 analysis:
   enabled: true

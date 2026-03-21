@@ -1,12 +1,12 @@
 from pathlib import Path
 from typing import Literal, Self
 
-from pydantic import Field, NonNegativeInt, PositiveFloat, PositiveInt, model_validator
+from pydantic import Field, PositiveFloat, PositiveInt, model_validator
 
 from spd.base_config import BaseConfig
-from spd.configs import Config, ScheduleConfig
-from spd.experiments.tms.configs import TMSModelConfig
 from spd.experiments.resid_mlp.configs import ResidMLPModelConfig
+from spd.experiments.tms.configs import TMSModelConfig
+from spd.configs import ScheduleConfig
 
 
 class FeatureDictionaryConfig(BaseConfig):
@@ -22,6 +22,7 @@ class FeatureDictionaryConfig(BaseConfig):
                 "Identity dictionaries require num_features == hidden_dim"
             )
         return self
+
 
 class ActivationGeneratorConfig(BaseConfig):
     default_probability: PositiveFloat = 0.1
@@ -57,53 +58,6 @@ class ActivationGeneratorConfig(BaseConfig):
         return self
 
 
-class DictionaryDatasetConfig(BaseConfig):
-    dictionary: FeatureDictionaryConfig
-    generator: ActivationGeneratorConfig
-
-
-class SAEBaselineConfig(BaseConfig):
-    dataset: DictionaryDatasetConfig
-    d_sae: PositiveInt
-    batch_size: PositiveInt
-    steps: PositiveInt
-    lr: PositiveFloat
-    l1_coefficient: PositiveFloat
-    eval_num_samples: PositiveInt = 10000
-    seed: int = 0
-    run_name: str = "sae_baseline"
-    out_dir: Path | None = None
-
-
-class FeatureRecoveryTrainConfig(BaseConfig):
-    dataset: DictionaryDatasetConfig
-    resid_mlp_model_config: ResidMLPModelConfig
-    label_type: Literal["act_plus_resid", "abs", "identity"] = "act_plus_resid"
-    loss_type: Literal["readoff", "resid"] = "readoff"
-    label_coeffs: list[float] | None = None
-    fixed_embedding: Literal["learned", "identity", "random", "feature_dictionary"] = "feature_dictionary"
-    freeze_embedding: bool = True
-    batch_size: PositiveInt = 2048
-    steps: PositiveInt = 10000
-    print_freq: PositiveInt = 100
-    lr_schedule: ScheduleConfig
-    n_eval_batches: PositiveInt = 20
-    seed: int = 0
-    run_name: str = "resid_mlp_feature_recovery"
-    out_dir: Path | None = None
-
-
-class FeatureRecoverySPDConfig(BaseConfig):
-    spd_config_path: Path
-    target_run_dir: Path
-    n_eval_steps: PositiveInt = 100
-    seed: int = 0
-    run_name: str = "feature_recovery_spd"
-
-    def load_spd_config(self) -> Config:
-        return Config.from_file(self.spd_config_path)
-
-
 class SyntheticFamilyConfig(BaseConfig):
     stage: Literal["axis_aligned", "hidden_activations"]
     dictionary: FeatureDictionaryConfig
@@ -120,18 +74,6 @@ class SyntheticFamilyConfig(BaseConfig):
                 "Hidden-activation stage requires a non-identity dictionary"
             )
         return self
-
-
-class SAEBaselineRunConfig(BaseConfig):
-    enabled: bool = True
-    d_sae: PositiveInt
-    l1_coefficient: PositiveFloat = 0.1
-    training_samples: PositiveInt = 200_000
-    batch_size: PositiveInt = 1024
-    lr: PositiveFloat = 3e-4
-    lr_warm_up_steps: NonNegativeInt = 0
-    lr_decay_steps: NonNegativeInt = 0
-    eval_num_samples: PositiveInt = 50_000
 
 
 class TargetTrainingConfig(BaseConfig):
@@ -174,7 +116,6 @@ class TargetTrainingConfig(BaseConfig):
 
 
 class SPDExecutionConfig(BaseConfig):
-    enabled: bool = True
     spd_config_path: Path
 
 
@@ -189,7 +130,6 @@ class FeatureRecoveryExperimentConfig(BaseConfig):
     out_dir: Path | None = None
     seed: int = 0
     synthetic: SyntheticFamilyConfig
-    sae: SAEBaselineRunConfig
     target: TargetTrainingConfig
-    spd: SPDExecutionConfig | None = None
+    spd: SPDExecutionConfig
     analysis: AnalysisConfig = AnalysisConfig()

@@ -10,7 +10,6 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import torch
-from sae_lens import StandardTrainingSAE, StandardTrainingSAEConfig
 from torch import Tensor
 
 from spd.configs import Config
@@ -31,16 +30,13 @@ from koko_experiments.feature_recovery.configs import (
 )
 from koko_experiments.feature_recovery.feature_datasets import (
     ObservedActivationDataset,
-    make_observed_labels,
 )
 from koko_experiments.feature_recovery.metrics import (
     analyze_component_model_directions,
-    evaluate_sae_baseline,
     summarize_spd_evaluation,
 )
 from koko_experiments.feature_recovery.results import (
     load_unified_target_bundle,
-    save_unified_sae_bundle,
     save_unified_target_bundle,
 )
 from koko_experiments.feature_recovery.synthetic import ActivationGenerator, FeatureDictionary
@@ -55,13 +51,13 @@ def _timestamped_dir(base: Path, run_name: str) -> Path:
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Unified feature-recovery runner for SAE baselines and SPD decomposition."
+        description="SPD-only feature-recovery runner for target training, decomposition, and analysis."
     )
     parser.add_argument("config", type=Path, help="Path to a YAML/JSON experiment config")
     parser.add_argument(
         "--stages",
-        default="sae,target,spd,analyze",
-        help="Comma-separated subset of sae,target,spd,analyze",
+        default="target,spd,analyze",
+        help="Comma-separated subset of target,spd,analyze",
     )
     return parser.parse_args()
 
@@ -158,7 +154,11 @@ def _train_tms_target(
     config: FeatureRecoveryExperimentConfig,
     device: str,
 ) -> dict[str, float]:
-    dataloader = DatasetGeneratedDataLoader(dataset, batch_size=config.target.batch_size, shuffle=False)
+    dataloader = DatasetGeneratedDataLoader(
+        dataset,
+        batch_size=config.target.batch_size,
+        shuffle=False,
+    )
     optimizer = torch.optim.AdamW(model.parameters(), lr=config.target.lr_schedule.start_val)
     eval_losses: list[float] = []
 
@@ -179,7 +179,9 @@ def _train_tms_target(
     for _ in range(10):
         observed, labels = dataset.generate_batch(config.target.batch_size)
         with torch.no_grad():
-            eval_losses.append(float(torch.mean((model(observed.to(device)) - labels.to(device).abs()) ** 2).item()))
+            eval_losses.append(
+                float(torch.mean((model(observed.to(device)) - labels.to(device).abs()) ** 2).item())
+            )
     return {"mean_eval_loss": sum(eval_losses) / len(eval_losses)}
 
 
@@ -201,7 +203,11 @@ def _train_resid_target(
     config: FeatureRecoveryExperimentConfig,
     device: str,
 ) -> dict[str, float]:
-    dataloader = DatasetGeneratedDataLoader(dataset, batch_size=config.target.batch_size, shuffle=False)
+    dataloader = DatasetGeneratedDataLoader(
+        dataset,
+        batch_size=config.target.batch_size,
+        shuffle=False,
+    )
     trainable_params = [param for param in model.parameters() if param.requires_grad]
     optimizer = torch.optim.AdamW(
         trainable_params,
@@ -228,7 +234,9 @@ def _train_resid_target(
         observed, labels = dataset.generate_batch(config.target.batch_size)
         with torch.no_grad():
             outputs = model(observed.to(device), return_residual=config.target.loss_type == "resid")
-            eval_losses.append(float(_resid_loss(model, outputs, labels.to(device), config.target.loss_type).item()))
+            eval_losses.append(
+                float(_resid_loss(model, outputs, labels.to(device), config.target.loss_type).item())
+            )
     return {"mean_eval_loss": sum(eval_losses) / len(eval_losses)}
 
 
@@ -252,51 +260,6 @@ def _save_target_bundle(
     return out_dir
 
 
-def _run_sae_baseline(
-    config: FeatureRecoveryExperimentConfig,
-    feature_dict: FeatureDictionary,
-    activation_generator: ActivationGenerator,
-    device: str,
-) -> Path:
-    sae = StandardTrainingSAE(
-        StandardTrainingSAEConfig(
-            d_in=config.synthetic.dictionary.hidden_dim,
-            d_sae=config.sae.d_sae,
-            l1_coefficient=config.sae.l1_coefficient,
-        )
-    ).to(device)
-    from sae_lens.synthetic import train_toy_sae
-
-    train_toy_sae(
-        sae=sae,
-        feature_dict=feature_dict,
-        activations_generator=activation_generator,
-        training_samples=config.sae.training_samples,
-        batch_size=config.sae.batch_size,
-        lr=config.sae.lr,
-        lr_warm_up_steps=config.sae.lr_warm_up_steps,
-        lr_decay_steps=config.sae.lr_decay_steps,
-        device=device,
-    )
-    metrics = evaluate_sae_baseline(
-        sae=sae,
-        feature_dict=feature_dict,
-        activations_generator=activation_generator,
-        eval_num_samples=config.sae.eval_num_samples,
-        batch_size=config.sae.batch_size,
-    )
-    base_dir = config.out_dir or SPD_OUT_DIR / "feature_recovery" / "sae"
-    out_dir = _timestamped_dir(base_dir, config.run_name)
-    save_unified_sae_bundle(
-        out_dir=out_dir,
-        config=config,
-        state_dict=sae.state_dict(),
-        feature_dict=feature_dict,
-        metrics=metrics,
-    )
-    return out_dir
-
-
 def _prepare_spd_config(path: Path) -> Config:
     return Config.from_file(path)
 
@@ -308,10 +271,17 @@ def _run_spd_stage(
     target_bundle_dir: Path,
     device: str,
 ) -> Path:
-    assert config.spd is not None, "SPD config must be provided to run the SPD stage"
     spd_config = _prepare_spd_config(config.spd.spd_config_path)
-    train_loader = DatasetGeneratedDataLoader(dataset, batch_size=spd_config.batch_size, shuffle=False)
-    eval_loader = DatasetGeneratedDataLoader(dataset, batch_size=spd_config.eval_batch_size, shuffle=False)
+    train_loader = DatasetGeneratedDataLoader(
+        dataset,
+        batch_size=spd_config.batch_size,
+        shuffle=False,
+    )
+    eval_loader = DatasetGeneratedDataLoader(
+        dataset,
+        batch_size=spd_config.eval_batch_size,
+        shuffle=False,
+    )
     run_id = generate_run_id("spd")
     run_experiment(
         target_model=model,
@@ -333,7 +303,11 @@ def _run_spd_stage(
         weights_only=True,
     )["feature_vectors"]
     save_file({"feature_vectors": feature_vectors}, run_dir / "feature_dictionary.pt")
-    save_file({"target_bundle_dir": str(target_bundle_dir)}, run_dir / "feature_recovery_metadata.json", indent=2)
+    save_file(
+        {"target_bundle_dir": str(target_bundle_dir)},
+        run_dir / "feature_recovery_metadata.json",
+        indent=2,
+    )
     return run_dir
 
 
@@ -398,26 +372,22 @@ def _analyze_spd_stage(
 def main() -> None:
     args = _parse_args()
     stages = {stage.strip() for stage in args.stages.split(",") if stage.strip()}
+    assert stages <= {"target", "spd", "analyze"}, "Stages must be drawn from target,spd,analyze"
+    if "analyze" in stages:
+        assert "spd" in stages, "Analyze stage requires running SPD in the same invocation"
+
     config = FeatureRecoveryExperimentConfig.from_file(args.config)
-    if config.spd is None:
-        stages.discard("spd")
-        stages.discard("analyze")
 
     set_seed(config.seed)
     device = get_device()
     feature_dict, activation_generator = _build_synthetic_family(config, device=device)
 
-    sae_dir: Path | None = None
+    dataset, label_coeffs = _build_target_dataset(config, feature_dict, activation_generator, device)
+    model = _build_target_model(config, device)
     target_bundle_dir: Path | None = None
     spd_run_dir: Path | None = None
 
-    if "sae" in stages and config.sae.enabled:
-        sae_dir = _run_sae_baseline(config, feature_dict, activation_generator, device)
-        print(f"sae_dir={sae_dir}")
-
     if {"target", "spd", "analyze"} & stages:
-        dataset, label_coeffs = _build_target_dataset(config, feature_dict, activation_generator, device)
-        model = _build_target_model(config, device)
         if config.target.model_type == "tms":
             summary = _train_tms_target(model, dataset, config, device)
         else:
@@ -426,13 +396,14 @@ def main() -> None:
         target_bundle_dir = _save_target_bundle(config, model, feature_dict, label_coeffs, summary)
         print(f"target_dir={target_bundle_dir}")
 
-        if "spd" in stages:
-            spd_run_dir = _run_spd_stage(config, model, dataset, target_bundle_dir, device)
-            print(f"spd_dir={spd_run_dir}")
+    if "spd" in stages:
+        assert target_bundle_dir is not None
+        spd_run_dir = _run_spd_stage(config, model, dataset, target_bundle_dir, device)
+        print(f"spd_dir={spd_run_dir}")
 
     if "analyze" in stages:
-        assert target_bundle_dir is not None, "Analyze stage requires a target bundle from this invocation"
-        assert spd_run_dir is not None, "Analyze stage requires an SPD run from this invocation"
+        assert target_bundle_dir is not None
+        assert spd_run_dir is not None
         analysis_path = _analyze_spd_stage(config, spd_run_dir, target_bundle_dir)
         print(f"analysis_path={analysis_path}")
 

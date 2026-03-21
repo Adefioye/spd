@@ -1,6 +1,6 @@
 # exp_01_axis_aligned
 
-Small axis-aligned calibration regime for comparing SAE and SPD on the same 8-feature synthetic family.
+Small axis-aligned calibration regime for testing SPD on the same 8-feature synthetic family across TMS and ResidMLP targets.
 
 ## Shared synthetic setup
 
@@ -10,11 +10,6 @@ Small axis-aligned calibration regime for comparing SAE and SPD on the same 8-fe
 - firing distribution: uniform with `default_probability = 0.125`
 - correlations: off
 - hierarchy: off
-
-## SAE dimensions
-
-- input dimension `d_in = 8`
-- latent dimension `d_sae = 8`
 
 ## TMS dimensions
 
@@ -49,18 +44,28 @@ python -m koko_experiments.feature_recovery.run_feature_recovery \
   koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/resid_mlp.yaml
 ```
 
-To run only the SAE baseline and target training without SPD:
+To train only the target model without running SPD:
 
 ```bash
 source .venv/bin/activate
 python -m koko_experiments.feature_recovery.run_feature_recovery \
   koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/tms.yaml \
-  --stages sae,target
+  --stages target
 ```
 
 ```bash
 source .venv/bin/activate
 python -m koko_experiments.feature_recovery.run_feature_recovery \
   koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/resid_mlp.yaml \
-  --stages sae,target
+  --stages target
 ```
+
+## Primary readout
+
+Use the generated `feature_recovery_analysis.json` to compare:
+
+- `MMCS`
+- `ML2R`
+- `coverage@0.95`
+- `coverage@0.99`
+- `faithfulness_mse`
