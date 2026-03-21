@@ -1,0 +1,11 @@
+{
+  "experiment_name": "exp_03_tms_5_2_paper_diff_seeds",
+  "base_config": "tms_5-2_cpu_paper.yaml",
+  "runs": [
+    {"run_label": "seed_0", "seed": 0},
+    {"run_label": "seed_1", "seed": 1},
+    {"run_label": "seed_2", "seed": 2},
+    {"run_label": "seed_3", "seed": 3},
+    {"run_label": "seed_4", "seed": 4}
+  ]
+}

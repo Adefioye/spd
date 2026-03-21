@@ -149,6 +149,41 @@ def _default_run_dir() -> Path:
     return run_dirs[0]
 
 
+def build_alignment_report(run_dir: Path, checkpoint: Path | None = None) -> dict[str, object]:
+    run_dir = run_dir.expanduser().resolve()
+    checkpoint = checkpoint.expanduser().resolve() if checkpoint is not None else _latest_component_checkpoint(run_dir)
+
+    target_model, component_model = _build_models(run_dir, checkpoint)
+
+    output: dict[str, object] = {
+        "run_dir": str(run_dir),
+        "checkpoint": str(checkpoint),
+        "target_model": {
+            "n_features": target_model.config.n_features,
+            "n_hidden": target_model.config.n_hidden,
+            "n_hidden_layers": target_model.config.n_hidden_layers,
+        },
+        "layers": {},
+    }
+
+    for layer_name in ["linear1", "linear2"]:
+        if layer_name not in component_model.components:
+            continue
+        component_layer = component_model.components[layer_name]
+        target_layer = target_model.get_submodule(layer_name)
+        target_weight = target_layer.weight.detach().cpu()
+        component_v = component_layer.V.detach().cpu()
+        component_u = component_layer.U.detach().cpu()
+        layer_metrics = _calc_layer_metrics(
+            target_weight=target_weight,
+            component_v=component_v,
+            component_u=component_u,
+        )
+        output["layers"][layer_name] = layer_metrics
+
+    return output
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -165,38 +200,8 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    run_dir = args.run_dir.expanduser().resolve() if args.run_dir else _default_run_dir().resolve()
-    checkpoint = args.checkpoint.expanduser().resolve() if args.checkpoint else _latest_component_checkpoint(run_dir)
-
-    target_model, component_model = _build_models(run_dir, checkpoint)
-
-    layer_names = ["linear1", "linear2"]
-    output: dict[str, object] = {
-        "run_dir": str(run_dir),
-        "checkpoint": str(checkpoint),
-        "target_model": {
-            "n_features": target_model.config.n_features,
-            "n_hidden": target_model.config.n_hidden,
-            "n_hidden_layers": target_model.config.n_hidden_layers,
-        },
-        "layers": {},
-    }
-
-    for layer_name in layer_names:
-        if layer_name not in component_model.components:
-            continue
-        component_layer = component_model.components[layer_name]
-        target_layer = target_model.get_submodule(layer_name)
-        target_weight = target_layer.weight.detach().cpu()
-        component_v = component_layer.V.detach().cpu()
-        component_u = component_layer.U.detach().cpu()
-        layer_metrics = _calc_layer_metrics(
-            target_weight=target_weight,
-            component_v=component_v,
-            component_u=component_u,
-        )
-        output["layers"][layer_name] = layer_metrics
-
+    run_dir = args.run_dir if args.run_dir else _default_run_dir()
+    output = build_alignment_report(run_dir=run_dir, checkpoint=args.checkpoint)
     print(json.dumps(output, indent=2, sort_keys=True))
 
 
