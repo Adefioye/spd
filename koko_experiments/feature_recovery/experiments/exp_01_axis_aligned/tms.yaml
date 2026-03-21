@@ -1,0 +1,48 @@
+run_name: exp_01_axis_aligned_tms
+seed: 0
+synthetic:
+  stage: axis_aligned
+  dictionary:
+    num_features: 8
+    hidden_dim: 8
+    initializer: identity
+    seed: 0
+  generator:
+    default_probability: 0.125
+    mean_firing_magnitudes: 1.0
+    std_firing_magnitudes: 0.05
+    seed: 0
+sae:
+  enabled: true
+  d_sae: 8
+  l1_coefficient: 0.1
+  training_samples: 100000
+  batch_size: 1024
+  lr: 0.0003
+  eval_num_samples: 20000
+target:
+  model_type: tms
+  tms_model_config:
+    n_features: 8
+    n_hidden: 4
+    n_hidden_layers: 0
+    tied_weights: false
+    init_bias_to_zero: true
+    device: cpu
+  batch_size: 1024
+  steps: 4000
+  print_freq: 200
+  lr_schedule:
+    start_val: 0.001
+    fn_type: cosine
+    warmup_pct: 0.0
+    final_val_frac: 0.0
+  label_type: identity
+  loss_type: readoff
+spd:
+  enabled: true
+  spd_config_path: koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/spd_tms.yaml
+analysis:
+  enabled: true
+  input_magnitude: 1.0
+  sampling: lower_leaky

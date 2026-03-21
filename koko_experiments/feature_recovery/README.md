@@ -22,6 +22,40 @@ The current implementation collapses the earlier stage-0 to stage-3 plan into tw
    - feature dictionary is identity
    - target models train directly on observed feature coordinates
    - use this as the calibration regime for both SAE and SPD
+   - recommended experiment plan:
+     1. Small clean calibration
+        - `num_features = hidden_dim = 8`
+        - SAE: `d_sae = 8`
+        - TMS: `n_hidden = 4`
+        - ResidMLP: `n_features = 8`, `d_embed = 8`, `fixed_embedding = identity`
+        - data: uniform firing, `feature_probability` around `0.10` to `0.15`, no correlation, no hierarchy
+        - purpose: establish the near-ceiling regime where both SAE and SPD should recover almost perfectly
+     2. Medium matched-dimension baseline
+        - `num_features = hidden_dim = 16`
+        - SAE: `d_sae = 16`
+        - TMS: `n_hidden = 8`
+        - ResidMLP: `n_features = 16`, `d_embed = 16`, `fixed_embedding = identity`
+        - data: start with uniform firing and `at_least_zero_active`, then add a Zipfian variant while keeping correlation and hierarchy off
+        - purpose: check whether SAE and SPD stay aligned when the feature set is larger but still axis-aligned
+     3. Large axis-aligned stress test
+        - `num_features = hidden_dim = 32`
+        - SAE: `d_sae = 32`
+        - TMS: `n_hidden = 16`
+        - ResidMLP: `n_features = 32`, `d_embed = 32`, `fixed_embedding = identity`
+        - data: run three subconditions with the same dimensions
+          - uniform firing only
+          - Zipfian firing only
+          - Zipfian plus mild correlations and shallow hierarchy
+        - purpose: identify the first regime where SAE remains strong but SPD begins to fragment or merge even though the features are still axis-aligned
+   - what to hold fixed for fair SAE vs SPD comparison:
+     - keep the identity dictionary in all three experiments
+     - set `d_sae` equal to the true number of features for the main matched-capacity run
+     - use the same synthetic family, seeds, and evaluation sample count for SAE and target-model/SPD runs
+     - for the cleanest comparison, start ResidMLP with `label_type = identity` and only add `act_plus_resid` after the identity-label baseline is stable
+     - for SPD, use a matched component budget `C ~= num_features` first, then an overcomplete follow-up such as `C = 2 * num_features`
+     - add one complication at a time: first firing distribution, then correlations, then hierarchy
+
+
 2. `hidden_activations`
    - synthetic family is driven by `sae_lens`
    - target models train on dense hidden activations generated from known latent features
