@@ -6,7 +6,7 @@ This folder contains SPD-only parameter-recovery experiments built on synthetic 
 
 - `synthetic.py`: synthetic feature dictionaries and activation generators, including firing-probability, correlation, and hierarchy controls.
 - `feature_datasets.py`: observed-activation datasets used to train target models and run SPD.
-- `metrics.py`: SPD parameter-recovery metrics centered on `MMCS` and `ML2R`, plus coverage and weight-faithfulness diagnostics.
+- `metrics.py`: SPD parameter-recovery metrics centered on `MMCS`, `ML2R`, and paper-relevant loss summaries.
 - `results.py`: target-bundle save/load helpers.
 - `run_parameter_recovery.py`: unified CLI for target training, SPD, and analysis.
 - `aggregate_results.py`: aggregate `parameter_recovery_analysis.json` files into a JSONL table.
@@ -42,9 +42,9 @@ Feature-recovery analysis is SPD-only and focuses on:
 
 The analysis output also includes:
 
-- `coverage@0.95`
-- `coverage@0.99`
 - layerwise `faithfulness_mse`
+- total `faithfulness_mse` across analyzed layers
+- paper-relevant SPD losses from `metrics.jsonl`
 - CI concentration summaries for singleton-feature probes
 
 ## Main entry point
@@ -91,10 +91,10 @@ The main comparison file is:
 
 This file contains:
 
-- the best SPD layer and direction role
-- `MMCS`
-- `ML2R`
-- coverage metrics
+- total `MMCS`
+- total `ML2R`
+- total `faithfulness_mse`
+- paper-relevant loss summaries
 - layerwise recovery breakdown
 
 ## Suggested order
@@ -102,4 +102,4 @@ This file contains:
 1. Train the target model on one synthetic family.
 2. Run SPD on that target bundle.
 3. Compare `MMCS` and `ML2R` first.
-4. Use coverage, `faithfulness_mse`, and CI summaries to diagnose failure modes.
+4. Use layerwise `faithfulness_mse`, loss summaries, and CI summaries to diagnose failure modes.

@@ -15,7 +15,7 @@ from spd.models.component_model import ComponentModel
 from spd.utils.module_utils import expand_module_patterns
 
 from koko_experiments.parameter_recovery.metrics import (
-    analyze_component_model_directions,
+    load_spd_loss_summary,
     summarize_spd_evaluation,
 )
 from koko_experiments.parameter_recovery.results import load_unified_target_bundle
@@ -47,17 +47,17 @@ def main(spd_run_dir: str, target_run_dir: str) -> None:
     spd_dir = Path(spd_run_dir)
     target_dir = Path(target_run_dir)
     component_model, feature_vectors = _load_component_model(spd_dir, target_dir)
-    spd_summary = summarize_spd_evaluation(
+    spd_summary, layer_metrics = summarize_spd_evaluation(
         component_model=component_model,
-        true_dictionary=feature_vectors,
+        n_probe_features=feature_vectors.shape[0],
         input_magnitude=1.0,
         sampling="lower_leaky",
     )
-    layer_metrics = analyze_component_model_directions(component_model, feature_vectors)
     output = {
         "spd_run_dir": str(spd_dir),
         "target_run_dir": str(target_dir),
         "summary": asdict(spd_summary),
+        "losses": load_spd_loss_summary(spd_dir),
         "layers": [asdict(metric) for metric in layer_metrics],
     }
     out_path = spd_dir / "parameter_recovery_analysis.json"

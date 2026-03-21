@@ -32,7 +32,7 @@ from koko_experiments.parameter_recovery.feature_datasets import (
     ObservedActivationDataset,
 )
 from koko_experiments.parameter_recovery.metrics import (
-    analyze_component_model_directions,
+    load_spd_loss_summary,
     summarize_spd_evaluation,
 )
 from koko_experiments.parameter_recovery.results import (
@@ -351,17 +351,17 @@ def _analyze_spd_stage(
     component_model.load_state_dict(component_state)
     component_model.eval()
 
-    spd_summary = summarize_spd_evaluation(
+    spd_summary, layer_metrics = summarize_spd_evaluation(
         component_model=component_model,
-        true_dictionary=feature_vectors,
+        n_probe_features=feature_vectors.shape[0],
         input_magnitude=config.analysis.input_magnitude,
         sampling=config.analysis.sampling,
     )
-    layer_metrics = analyze_component_model_directions(component_model, feature_vectors)
     output = {
         "spd_run_dir": str(spd_run_dir),
         "target_run_dir": str(target_bundle_dir),
         "summary": asdict(spd_summary),
+        "losses": load_spd_loss_summary(spd_run_dir),
         "layers": [asdict(layer) for layer in layer_metrics],
     }
     out_path = spd_run_dir / "parameter_recovery_analysis.json"

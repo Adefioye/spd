@@ -1,7 +1,8 @@
+import json
 from dataclasses import asdict, dataclass
+from pathlib import Path
 
 import torch
-from jaxtyping import Float
 from torch import Tensor
 
 from spd.plotting import get_single_feature_causal_importances
@@ -11,91 +12,70 @@ from spd.plotting import get_single_feature_causal_importances
 class RecoveryMetrics:
     mmcs: float
     ml2r: float
-    coverage_at_095: float
-    coverage_at_099: float
+
+
+@dataclass
+class LayerParameterMetrics:
+    layer_name: str
+    mmcs: float
+    ml2r: float
+    faithfulness_mse: float
 
 
 @dataclass
 class SPDEvaluation:
-    best_layer: str
-    best_direction_role: str
     recovery_metrics: RecoveryMetrics
+    faithfulness_mse: float
     ci_summary: dict[str, dict[str, float]]
 
 
-@dataclass
-class LayerDirectionMetrics:
-    layer_name: str
-    direction_role: str
-    mmcs: float
-    ml2r: float
-    coverage_at_095: float
-    coverage_at_099: float
-    faithfulness_mse: float
+def _calc_layer_alignment_stats(
+    target_weight: Tensor,
+    component_v: Tensor,
+    component_u: Tensor,
+    eps: float = 1e-12,
+) -> tuple[Tensor, Tensor, float]:
+    component_column_vectors = torch.einsum("ic,cd->cid", component_v, component_u)
+    target_columns = target_weight.T
+
+    component_norm = component_column_vectors.norm(dim=-1, keepdim=True).clamp_min(eps)
+    target_norm = target_columns.norm(dim=-1, keepdim=True).clamp_min(eps)
+
+    component_unit = component_column_vectors / component_norm
+    target_unit = target_columns / target_norm
+
+    cosine_sim = torch.einsum("cid,id->ci", component_unit, target_unit)
+    max_cos, max_idx = cosine_sim.max(dim=0)
+
+    matched_component_columns = component_column_vectors[
+        max_idx, torch.arange(target_columns.shape[0], device=target_columns.device)
+    ]
+    l2_ratio = matched_component_columns.norm(dim=-1) / target_columns.norm(dim=-1).clamp_min(eps)
+
+    reconstructed_weight = torch.einsum("ic,cd->di", component_v, component_u)
+    faithfulness_mse = float(torch.mean((reconstructed_weight - target_weight) ** 2).item())
+    return max_cos, l2_ratio, faithfulness_mse
 
 
-def _normalize_rows(x: Tensor) -> Tensor:
-    return x / x.norm(dim=-1, keepdim=True).clamp_min(1e-8)
-
-
-def compute_recovery_metrics(
-    learned_vectors: Float[Tensor, "n_learned d"],
-    true_vectors: Float[Tensor, "n_true d"],
-) -> RecoveryMetrics:
-    learned = _normalize_rows(learned_vectors)
-    true = _normalize_rows(true_vectors)
-    cosine = learned @ true.T
-
-    best_cos, best_idx = cosine.abs().max(dim=0)
-    learned_norms = learned_vectors.norm(dim=-1)
-    true_norms = true_vectors.norm(dim=-1).clamp_min(1e-8)
-    matched_norms = learned_norms[best_idx]
-    l2_ratio = matched_norms / true_norms
-
-    return RecoveryMetrics(
-        mmcs=float(best_cos.mean().item()),
-        ml2r=float(l2_ratio.mean().item()),
-        coverage_at_095=float((best_cos >= 0.95).float().mean().item()),
-        coverage_at_099=float((best_cos >= 0.99).float().mean().item()),
-    )
-
-
-def analyze_component_model_directions(
-    component_model: torch.nn.Module,
-    true_dictionary: Float[Tensor, "num_features hidden_dim"],
-) -> list[LayerDirectionMetrics]:
-    metrics: list[LayerDirectionMetrics] = []
+def analyze_component_model_layers(component_model: torch.nn.Module) -> list[LayerParameterMetrics]:
+    metrics: list[LayerParameterMetrics] = []
     for layer_name, components in component_model.components.items():
+        if not (hasattr(components, "V") and hasattr(components, "U")):
+            continue
         target_weight = component_model.target_weight(layer_name).detach()
-        learned_weight = components.weight.detach()
-        faithfulness_mse = float(torch.mean((learned_weight - target_weight) ** 2).item())
-
-        if hasattr(components, "V") and components.V.shape[0] == true_dictionary.shape[1]:
-            in_metrics = compute_recovery_metrics(
-                learned_vectors=components.V.detach().T,
-                true_vectors=true_dictionary,
+        max_cos, l2_ratio, faithfulness_mse = _calc_layer_alignment_stats(
+            target_weight=target_weight,
+            component_v=components.V.detach(),
+            component_u=components.U.detach(),
+        )
+        metrics.append(
+            LayerParameterMetrics(
+                layer_name=layer_name,
+                mmcs=float(max_cos.mean().item()),
+                ml2r=float(l2_ratio.mean().item()),
+                faithfulness_mse=faithfulness_mse,
             )
-            metrics.append(
-                LayerDirectionMetrics(
-                    layer_name=layer_name,
-                    direction_role="input",
-                    faithfulness_mse=faithfulness_mse,
-                    **asdict(in_metrics),
-                )
-            )
-        if hasattr(components, "U") and components.U.shape[1] == true_dictionary.shape[1]:
-            out_metrics = compute_recovery_metrics(
-                learned_vectors=components.U.detach(),
-                true_vectors=true_dictionary,
-            )
-            metrics.append(
-                LayerDirectionMetrics(
-                    layer_name=layer_name,
-                    direction_role="output",
-                    faithfulness_mse=faithfulness_mse,
-                    **asdict(out_metrics),
-                )
-            )
+        )
     return metrics
 
 
@@ -125,27 +105,67 @@ def singleton_feature_ci_summary(
 
 def summarize_spd_evaluation(
     component_model: torch.nn.Module,
-    true_dictionary: Float[Tensor, "num_features hidden_dim"],
+    n_probe_features: int,
     input_magnitude: float,
     sampling: str,
-) -> SPDEvaluation:
-    layer_metrics = analyze_component_model_directions(component_model, true_dictionary)
-    assert layer_metrics, "No SPD component directions matched the observed-space dimensionality"
-    best_layer_metric = max(layer_metrics, key=lambda metric: metric.mmcs)
+) -> tuple[SPDEvaluation, list[LayerParameterMetrics]]:
+    layer_metrics = analyze_component_model_layers(component_model)
+    assert layer_metrics, "No SPD component layers with U/V factors were found"
+
+    all_max_cos: list[Tensor] = []
+    all_l2_ratio: list[Tensor] = []
+    squared_error_sum = 0.0
+    n_params = 0
+    for layer_name, components in component_model.components.items():
+        if not (hasattr(components, "V") and hasattr(components, "U")):
+            continue
+        target_weight = component_model.target_weight(layer_name).detach()
+        max_cos, l2_ratio, _ = _calc_layer_alignment_stats(
+            target_weight=target_weight,
+            component_v=components.V.detach(),
+            component_u=components.U.detach(),
+        )
+        reconstructed_weight = components.weight.detach()
+        squared_error_sum += float(torch.sum((reconstructed_weight - target_weight) ** 2).item())
+        n_params += target_weight.numel()
+        all_max_cos.append(max_cos)
+        all_l2_ratio.append(l2_ratio)
+
+    total_max_cos = torch.cat(all_max_cos)
+    total_l2_ratio = torch.cat(all_l2_ratio)
     ci_summary = singleton_feature_ci_summary(
         component_model=component_model,
-        n_features=true_dictionary.shape[0],
+        n_features=n_probe_features,
         input_magnitude=input_magnitude,
         sampling=sampling,
     )
-    return SPDEvaluation(
-        best_layer=best_layer_metric.layer_name,
-        best_direction_role=best_layer_metric.direction_role,
+    summary = SPDEvaluation(
         recovery_metrics=RecoveryMetrics(
-            mmcs=best_layer_metric.mmcs,
-            ml2r=best_layer_metric.ml2r,
-            coverage_at_095=best_layer_metric.coverage_at_095,
-            coverage_at_099=best_layer_metric.coverage_at_099,
+            mmcs=float(total_max_cos.mean().item()),
+            ml2r=float(total_l2_ratio.mean().item()),
         ),
+        faithfulness_mse=squared_error_sum / n_params,
         ci_summary=ci_summary,
     )
+    return summary, layer_metrics
+
+
+def load_spd_loss_summary(spd_run_dir: Path) -> dict[str, float]:
+    metrics_path = spd_run_dir / "metrics.jsonl"
+    if not metrics_path.exists():
+        return {}
+
+    relevant_keys = {
+        "train/loss/total",
+        "loss/ImportanceMinimalityLoss",
+        "loss/StochasticReconLoss",
+        "loss/StochasticReconLayerwiseLoss",
+        "loss/StochasticHiddenActsReconLoss",
+    }
+    latest: dict[str, float] = {}
+    for line in metrics_path.read_text().splitlines():
+        row = json.loads(line)
+        for key in relevant_keys:
+            if key in row:
+                latest[key] = float(row[key])
+    return latest

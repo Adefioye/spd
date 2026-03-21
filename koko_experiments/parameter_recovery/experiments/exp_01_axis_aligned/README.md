@@ -66,6 +66,5 @@ Use the generated `parameter_recovery_analysis.json` to compare:
 
 - `MMCS`
 - `ML2R`
-- `coverage@0.95`
-- `coverage@0.99`
-- `faithfulness_mse`
+- total `faithfulness_mse`
+- layerwise `faithfulness_mse`
