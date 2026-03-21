@@ -14,12 +14,12 @@ from spd.configs import Config
 from spd.models.component_model import ComponentModel
 from spd.utils.module_utils import expand_module_patterns
 
-from koko_experiments.feature_recovery.metrics import (
+from koko_experiments.parameter_recovery.metrics import (
     analyze_component_model_directions,
     summarize_spd_evaluation,
 )
-from koko_experiments.feature_recovery.results import load_unified_target_bundle
-from koko_experiments.feature_recovery.run_feature_recovery import _instantiate_target_model
+from koko_experiments.parameter_recovery.results import load_unified_target_bundle
+from koko_experiments.parameter_recovery.run_parameter_recovery import _instantiate_target_model
 
 
 def _load_component_model(spd_run_dir: Path, target_run_dir: Path) -> tuple[ComponentModel, torch.Tensor]:
@@ -60,7 +60,7 @@ def main(spd_run_dir: str, target_run_dir: str) -> None:
         "summary": asdict(spd_summary),
         "layers": [asdict(metric) for metric in layer_metrics],
     }
-    out_path = spd_dir / "feature_recovery_analysis.json"
+    out_path = spd_dir / "parameter_recovery_analysis.json"
     out_path.write_text(json.dumps(output, indent=2))
     print(out_path)
 

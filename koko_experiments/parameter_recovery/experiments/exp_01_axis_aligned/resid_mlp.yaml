@@ -34,7 +34,7 @@ target:
   loss_type: readoff
   fixed_embedding: identity
 spd:
-  spd_config_path: koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/spd_resid_mlp.yaml
+  spd_config_path: koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/spd_resid_mlp.yaml
 analysis:
   enabled: true
   input_magnitude: 1.0

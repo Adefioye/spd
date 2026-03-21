@@ -125,7 +125,7 @@ class AnalysisConfig(BaseConfig):
     sampling: Literal["lower_leaky", "exactly_zero"] = "lower_leaky"
 
 
-class FeatureRecoveryExperimentConfig(BaseConfig):
+class ParameterRecoveryExperimentConfig(BaseConfig):
     run_name: str
     out_dir: Path | None = None
     seed: int = 0

@@ -1,15 +1,15 @@
-# Feature Recovery Experiments
+# Parameter Recovery Experiments
 
-This folder contains SPD-only feature-recovery experiments built on synthetic families generated with `sae_lens.synthetic`.
+This folder contains SPD-only parameter-recovery experiments built on synthetic families generated with `sae_lens.synthetic`.
 
 ## What is here
 
 - `synthetic.py`: synthetic feature dictionaries and activation generators, including firing-probability, correlation, and hierarchy controls.
 - `feature_datasets.py`: observed-activation datasets used to train target models and run SPD.
-- `metrics.py`: SPD feature-recovery metrics centered on `MMCS` and `ML2R`, plus coverage and weight-faithfulness diagnostics.
+- `metrics.py`: SPD parameter-recovery metrics centered on `MMCS` and `ML2R`, plus coverage and weight-faithfulness diagnostics.
 - `results.py`: target-bundle save/load helpers.
-- `run_feature_recovery.py`: unified CLI for target training, SPD, and analysis.
-- `aggregate_results.py`: aggregate `feature_recovery_analysis.json` files into a JSONL table.
+- `run_parameter_recovery.py`: unified CLI for target training, SPD, and analysis.
+- `aggregate_results.py`: aggregate `parameter_recovery_analysis.json` files into a JSONL table.
 - `experiments/`: concrete experiment folders with target YAMLs, dedicated SPD YAMLs, and per-experiment notes.
 
 ## Experimental stages
@@ -53,8 +53,8 @@ Run a concrete experiment YAML from `experiments/`, for example:
 
 ```bash
 source .venv/bin/activate
-python -m koko_experiments.feature_recovery.run_feature_recovery \
-  koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/tms.yaml
+python -m koko_experiments.parameter_recovery.run_parameter_recovery \
+  koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/tms.yaml
 ```
 
 Available stages are:
@@ -67,27 +67,27 @@ Examples:
 
 ```bash
 source .venv/bin/activate
-python -m koko_experiments.feature_recovery.run_feature_recovery \
-  koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/tms.yaml \
+python -m koko_experiments.parameter_recovery.run_parameter_recovery \
+  koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/tms.yaml \
   --stages target
 ```
 
 ```bash
 source .venv/bin/activate
-python -m koko_experiments.feature_recovery.run_feature_recovery \
-  koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/resid_mlp.yaml
+python -m koko_experiments.parameter_recovery.run_parameter_recovery \
+  koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/resid_mlp.yaml
 ```
 
 ## Output layout
 
 By default, outputs are written under `SPD_OUT_DIR`:
 
-- target bundles: `SPD_OUT_DIR/feature_recovery/targets/<run_name>_<timestamp>/`
+- target bundles: `SPD_OUT_DIR/parameter_recovery/targets/<run_name>_<timestamp>/`
 - SPD runs: `SPD_OUT_DIR/spd/<run_id>/`
 
 The main comparison file is:
 
-- `SPD_OUT_DIR/spd/<run_id>/feature_recovery_analysis.json`
+- `SPD_OUT_DIR/spd/<run_id>/parameter_recovery_analysis.json`
 
 This file contains:
 

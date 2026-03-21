@@ -1,6 +1,6 @@
 # exp_01_axis_aligned
 
-Small axis-aligned calibration regime for testing SPD on the same 8-feature synthetic family across TMS and ResidMLP targets.
+Small axis-aligned calibration regime for testing SPD parameter recovery on the same 8-feature synthetic family across TMS and ResidMLP targets.
 
 ## Shared synthetic setup
 
@@ -34,35 +34,35 @@ From the repo root:
 
 ```bash
 source .venv/bin/activate
-python -m koko_experiments.feature_recovery.run_feature_recovery \
-  koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/tms.yaml
+python -m koko_experiments.parameter_recovery.run_parameter_recovery \
+  koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/tms.yaml
 ```
 
 ```bash
 source .venv/bin/activate
-python -m koko_experiments.feature_recovery.run_feature_recovery \
-  koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/resid_mlp.yaml
+python -m koko_experiments.parameter_recovery.run_parameter_recovery \
+  koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/resid_mlp.yaml
 ```
 
 To train only the target model without running SPD:
 
 ```bash
 source .venv/bin/activate
-python -m koko_experiments.feature_recovery.run_feature_recovery \
-  koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/tms.yaml \
+python -m koko_experiments.parameter_recovery.run_parameter_recovery \
+  koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/tms.yaml \
   --stages target
 ```
 
 ```bash
 source .venv/bin/activate
-python -m koko_experiments.feature_recovery.run_feature_recovery \
-  koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/resid_mlp.yaml \
+python -m koko_experiments.parameter_recovery.run_parameter_recovery \
+  koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/resid_mlp.yaml \
   --stages target
 ```
 
 ## Primary readout
 
-Use the generated `feature_recovery_analysis.json` to compare:
+Use the generated `parameter_recovery_analysis.json` to compare:
 
 - `MMCS`
 - `ML2R`

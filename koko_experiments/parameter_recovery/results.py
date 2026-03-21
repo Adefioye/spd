@@ -10,7 +10,7 @@ from spd.experiments.resid_mlp.models import ResidMLP
 from spd.experiments.tms.models import TMSModel
 from spd.utils.run_utils import save_file
 
-from .configs import FeatureRecoveryExperimentConfig
+from .configs import ParameterRecoveryExperimentConfig
 from .synthetic import FeatureDictionary
 
 
@@ -28,19 +28,19 @@ def _serialize(obj: Any) -> Any:
 
 def save_unified_target_bundle(
     out_dir: Path,
-    config: FeatureRecoveryExperimentConfig,
+    config: ParameterRecoveryExperimentConfig,
     model: TMSModel | ResidMLP,
     feature_dict: FeatureDictionary,
     label_coeffs: Tensor,
     summary: dict[str, Any],
 ) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
-    config.to_file(out_dir / "feature_recovery_config.yaml")
+    config.to_file(out_dir / "parameter_recovery_config.yaml")
     save_file({"model_type": config.target.model_type}, out_dir / "bundle_metadata.json", indent=2)
     checkpoint_name = (
-        "tms_feature_recovery.pth"
+        "tms_parameter_recovery.pth"
         if config.target.model_type == "tms"
-        else "resid_mlp_feature_recovery.pth"
+        else "resid_mlp_parameter_recovery.pth"
     )
     save_file(model.state_dict(), out_dir / checkpoint_name)
     save_file(
@@ -53,11 +53,11 @@ def save_unified_target_bundle(
 
 def load_unified_target_bundle(
     out_dir: Path,
-) -> tuple[FeatureRecoveryExperimentConfig, str, dict[str, Tensor], Tensor, Tensor]:
-    config = FeatureRecoveryExperimentConfig.from_file(out_dir / "feature_recovery_config.yaml")
+) -> tuple[ParameterRecoveryExperimentConfig, str, dict[str, Tensor], Tensor, Tensor]:
+    config = ParameterRecoveryExperimentConfig.from_file(out_dir / "parameter_recovery_config.yaml")
     model_type = json.loads((out_dir / "bundle_metadata.json").read_text())["model_type"]
     checkpoint_name = (
-        "tms_feature_recovery.pth" if model_type == "tms" else "resid_mlp_feature_recovery.pth"
+        "tms_parameter_recovery.pth" if model_type == "tms" else "resid_mlp_parameter_recovery.pth"
     )
     state_dict = torch.load(out_dir / checkpoint_name, map_location="cpu", weights_only=True)
     feature_vectors = torch.load(

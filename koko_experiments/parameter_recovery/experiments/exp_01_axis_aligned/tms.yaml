@@ -32,7 +32,7 @@ target:
   label_type: identity
   loss_type: readoff
 spd:
-  spd_config_path: koko_experiments/feature_recovery/experiments/exp_01_axis_aligned/spd_tms.yaml
+  spd_config_path: koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/spd_tms.yaml
 analysis:
   enabled: true
   input_magnitude: 1.0

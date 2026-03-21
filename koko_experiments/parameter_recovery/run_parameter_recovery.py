@@ -24,22 +24,22 @@ from spd.utils.general_utils import get_scheduled_value, set_seed
 from spd.utils.module_utils import expand_module_patterns
 from spd.utils.run_utils import generate_run_id, save_file
 
-from koko_experiments.feature_recovery.configs import (
-    FeatureRecoveryExperimentConfig,
+from koko_experiments.parameter_recovery.configs import (
+    ParameterRecoveryExperimentConfig,
     TargetTrainingConfig,
 )
-from koko_experiments.feature_recovery.feature_datasets import (
+from koko_experiments.parameter_recovery.feature_datasets import (
     ObservedActivationDataset,
 )
-from koko_experiments.feature_recovery.metrics import (
+from koko_experiments.parameter_recovery.metrics import (
     analyze_component_model_directions,
     summarize_spd_evaluation,
 )
-from koko_experiments.feature_recovery.results import (
+from koko_experiments.parameter_recovery.results import (
     load_unified_target_bundle,
     save_unified_target_bundle,
 )
-from koko_experiments.feature_recovery.synthetic import ActivationGenerator, FeatureDictionary
+from koko_experiments.parameter_recovery.synthetic import ActivationGenerator, FeatureDictionary
 
 
 def _timestamped_dir(base: Path, run_name: str) -> Path:
@@ -51,7 +51,7 @@ def _timestamped_dir(base: Path, run_name: str) -> Path:
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="SPD-only feature-recovery runner for target training, decomposition, and analysis."
+        description="SPD-only parameter-recovery runner for target training, decomposition, and analysis."
     )
     parser.add_argument("config", type=Path, help="Path to a YAML/JSON experiment config")
     parser.add_argument(
@@ -63,7 +63,7 @@ def _parse_args() -> argparse.Namespace:
 
 
 def _build_synthetic_family(
-    config: FeatureRecoveryExperimentConfig,
+    config: ParameterRecoveryExperimentConfig,
     device: str,
 ) -> tuple[FeatureDictionary, ActivationGenerator]:
     feature_dict = FeatureDictionary.from_config(config.synthetic.dictionary, device=device)
@@ -91,7 +91,7 @@ def _make_label_coeffs(
 
 
 def _build_target_dataset(
-    config: FeatureRecoveryExperimentConfig,
+    config: ParameterRecoveryExperimentConfig,
     feature_dict: FeatureDictionary,
     activation_generator: ActivationGenerator,
     device: str,
@@ -118,7 +118,7 @@ def _build_target_dataset(
 
 
 def _build_target_model(
-    config: FeatureRecoveryExperimentConfig,
+    config: ParameterRecoveryExperimentConfig,
     device: str,
 ) -> TMSModel | ResidMLP:
     observed_dim = config.synthetic.dictionary.hidden_dim
@@ -151,7 +151,7 @@ def _build_target_model(
 def _train_tms_target(
     model: TMSModel,
     dataset: ObservedActivationDataset,
-    config: FeatureRecoveryExperimentConfig,
+    config: ParameterRecoveryExperimentConfig,
     device: str,
 ) -> dict[str, float]:
     dataloader = DatasetGeneratedDataLoader(
@@ -200,7 +200,7 @@ def _resid_loss(
 def _train_resid_target(
     model: ResidMLP,
     dataset: ObservedActivationDataset,
-    config: FeatureRecoveryExperimentConfig,
+    config: ParameterRecoveryExperimentConfig,
     device: str,
 ) -> dict[str, float]:
     dataloader = DatasetGeneratedDataLoader(
@@ -241,13 +241,13 @@ def _train_resid_target(
 
 
 def _save_target_bundle(
-    config: FeatureRecoveryExperimentConfig,
+    config: ParameterRecoveryExperimentConfig,
     model: TMSModel | ResidMLP,
     feature_dict: FeatureDictionary,
     label_coeffs: Tensor,
     summary: dict[str, float],
 ) -> Path:
-    base_dir = config.out_dir or SPD_OUT_DIR / "feature_recovery" / "targets"
+    base_dir = config.out_dir or SPD_OUT_DIR / "parameter_recovery" / "targets"
     out_dir = _timestamped_dir(base_dir, config.run_name)
     save_unified_target_bundle(
         out_dir=out_dir,
@@ -265,7 +265,7 @@ def _prepare_spd_config(path: Path) -> Config:
 
 
 def _run_spd_stage(
-    config: FeatureRecoveryExperimentConfig,
+    config: ParameterRecoveryExperimentConfig,
     model: TMSModel | ResidMLP,
     dataset: ObservedActivationDataset,
     target_bundle_dir: Path,
@@ -289,7 +289,7 @@ def _run_spd_stage(
         device=device,
         train_loader=train_loader,
         eval_loader=eval_loader,
-        experiment_tag=f"feature_recovery_{config.target.model_type}",
+        experiment_tag=f"parameter_recovery_{config.target.model_type}",
         run_id=run_id,
         launch_id=None,
         evals_id=None,
@@ -305,14 +305,14 @@ def _run_spd_stage(
     save_file({"feature_vectors": feature_vectors}, run_dir / "feature_dictionary.pt")
     save_file(
         {"target_bundle_dir": str(target_bundle_dir)},
-        run_dir / "feature_recovery_metadata.json",
+        run_dir / "parameter_recovery_metadata.json",
         indent=2,
     )
     return run_dir
 
 
 def _instantiate_target_model(
-    config: FeatureRecoveryExperimentConfig,
+    config: ParameterRecoveryExperimentConfig,
     model_type: str,
     state_dict: dict[str, Tensor],
 ) -> TMSModel | ResidMLP:
@@ -329,7 +329,7 @@ def _instantiate_target_model(
 
 
 def _analyze_spd_stage(
-    config: FeatureRecoveryExperimentConfig,
+    config: ParameterRecoveryExperimentConfig,
     spd_run_dir: Path,
     target_bundle_dir: Path,
 ) -> Path:
@@ -364,7 +364,7 @@ def _analyze_spd_stage(
         "summary": asdict(spd_summary),
         "layers": [asdict(layer) for layer in layer_metrics],
     }
-    out_path = spd_run_dir / "feature_recovery_analysis.json"
+    out_path = spd_run_dir / "parameter_recovery_analysis.json"
     out_path.write_text(json.dumps(output, indent=2, default=str))
     return out_path
 
@@ -376,7 +376,7 @@ def main() -> None:
     if "analyze" in stages:
         assert "spd" in stages, "Analyze stage requires running SPD in the same invocation"
 
-    config = FeatureRecoveryExperimentConfig.from_file(args.config)
+    config = ParameterRecoveryExperimentConfig.from_file(args.config)
 
     set_seed(config.seed)
     device = get_device()
