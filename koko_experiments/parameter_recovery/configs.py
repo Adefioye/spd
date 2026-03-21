@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Literal, Self
 
-from pydantic import Field, PositiveFloat, PositiveInt, model_validator
+from pydantic import Field, NonNegativeFloat, PositiveFloat, PositiveInt, model_validator
 
 from spd.base_config import BaseConfig
 from spd.experiments.resid_mlp.configs import ResidMLPModelConfig
@@ -85,6 +85,7 @@ class TargetTrainingConfig(BaseConfig):
     batch_size: PositiveInt = 1024
     steps: PositiveInt = 5_000
     print_freq: PositiveInt = 100
+    weight_decay: NonNegativeFloat = 0.01
     lr_schedule: ScheduleConfig
     label_type: Literal["identity", "act_plus_resid", "abs"] = "identity"
     loss_type: Literal["readoff", "resid"] = "readoff"

@@ -198,7 +198,11 @@ def _train_tms_target(
     device: str,
 ) -> dict[str, float]:
     dataloader = _make_target_train_loader(dataset, config)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=config.target.lr_schedule.start_val)
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=config.target.lr_schedule.start_val,
+        weight_decay=config.target.weight_decay,
+    )
     eval_losses: list[float] = []
     data_iter = iter(dataloader)
     for step in range(config.target.steps):
@@ -254,7 +258,7 @@ def _train_resid_target(
     optimizer = torch.optim.AdamW(
         trainable_params,
         lr=config.target.lr_schedule.start_val,
-        weight_decay=0.01,
+        weight_decay=config.target.weight_decay,
     )
     eval_losses: list[float] = []
 

@@ -25,6 +25,7 @@ target:
   batch_size: 1024
   steps: 4000
   print_freq: 200
+  weight_decay: 0.01
   lr_schedule:
     start_val: 0.001
     fn_type: cosine
