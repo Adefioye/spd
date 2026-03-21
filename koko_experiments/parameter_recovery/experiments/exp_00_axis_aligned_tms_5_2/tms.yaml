@@ -1,4 +1,4 @@
-run_name: exp_00_axis_aligned_tms_5_2
+run_name: exp_00_axis_aligned_tms_5_2_wd_0.01
 seed: 0
 synthetic:
   stage: axis_aligned
