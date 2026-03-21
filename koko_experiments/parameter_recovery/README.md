@@ -90,11 +90,16 @@ Use `target.eval_num_samples` the same way for evaluation. This only changes tar
 By default, outputs are written under `SPD_OUT_DIR`:
 
 - target bundles: `SPD_OUT_DIR/parameter_recovery/targets/<run_name>_<timestamp>/`
+- summary-only analysis bundles: `SPD_OUT_DIR/parameter_recovery/results/<run_name>_<timestamp>/`
 - SPD runs: `SPD_OUT_DIR/spd/<run_id>/`
 
-The main comparison file is:
+The SPD run still contains:
 
 - `SPD_OUT_DIR/spd/<run_id>/parameter_recovery_analysis.json`
+
+The cleaner summary artifact is also written to:
+
+- `SPD_OUT_DIR/parameter_recovery/results/<run_name>_<timestamp>/<run_name>_parameter_recovery_analysis.json`
 
 This file contains:
 

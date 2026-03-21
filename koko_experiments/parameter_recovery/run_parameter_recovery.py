@@ -356,11 +356,26 @@ def _run_spd_stage(
     )["feature_vectors"]
     save_file({"feature_vectors": feature_vectors}, run_dir / "feature_dictionary.pt")
     save_file(
-        {"target_bundle_dir": str(target_bundle_dir)},
+        {
+            "run_name": config.run_name,
+            "target_bundle_dir": str(target_bundle_dir),
+            "target_model_type": config.target.model_type,
+        },
         run_dir / "parameter_recovery_metadata.json",
         indent=2,
     )
     return run_dir
+
+
+def _save_analysis_result(
+    config: ParameterRecoveryExperimentConfig,
+    analysis_payload: dict[str, object],
+) -> Path:
+    results_base_dir = SPD_OUT_DIR / "parameter_recovery" / "results"
+    result_dir = _timestamped_dir(results_base_dir, config.run_name)
+    result_path = result_dir / f"{config.run_name}_parameter_recovery_analysis.json"
+    result_path.write_text(json.dumps(analysis_payload, indent=2, default=str))
+    return result_path
 
 
 def _instantiate_target_model(
@@ -384,7 +399,7 @@ def _analyze_spd_stage(
     config: ParameterRecoveryExperimentConfig,
     spd_run_dir: Path,
     target_bundle_dir: Path,
-) -> Path:
+) -> tuple[Path, Path]:
     config_from_bundle, model_type, state_dict, feature_vectors, _ = load_unified_target_bundle(
         target_bundle_dir
     )
@@ -410,15 +425,18 @@ def _analyze_spd_stage(
         sampling=config.analysis.sampling,
     )
     output = {
+        "run_name": config.run_name,
+        "target_model_type": config.target.model_type,
         "spd_run_dir": str(spd_run_dir),
         "target_run_dir": str(target_bundle_dir),
         "summary": asdict(spd_summary),
         "losses": load_spd_loss_summary(spd_run_dir),
         "layers": [asdict(layer) for layer in layer_metrics],
     }
-    out_path = spd_run_dir / "parameter_recovery_analysis.json"
-    out_path.write_text(json.dumps(output, indent=2, default=str))
-    return out_path
+    spd_out_path = spd_run_dir / "parameter_recovery_analysis.json"
+    spd_out_path.write_text(json.dumps(output, indent=2, default=str))
+    result_path = _save_analysis_result(config, output)
+    return spd_out_path, result_path
 
 
 def main() -> None:
@@ -456,8 +474,9 @@ def main() -> None:
     if "analyze" in stages:
         assert target_bundle_dir is not None
         assert spd_run_dir is not None
-        analysis_path = _analyze_spd_stage(config, spd_run_dir, target_bundle_dir)
+        analysis_path, result_path = _analyze_spd_stage(config, spd_run_dir, target_bundle_dir)
         print(f"analysis_path={analysis_path}")
+        print(f"result_path={result_path}")
 
 
 if __name__ == "__main__":
