@@ -158,6 +158,8 @@ def load_spd_loss_summary(spd_run_dir: Path) -> dict[str, float]:
 
     relevant_keys = {
         "train/loss/total",
+        "train/loss/FaithfulnessLoss",
+        "loss/FaithfulnessLoss",
         "loss/ImportanceMinimalityLoss",
         "loss/StochasticReconLoss",
         "loss/StochasticReconLayerwiseLoss",

@@ -9,6 +9,7 @@ This folder contains SPD-only parameter-recovery experiments built on synthetic 
 - `metrics.py`: SPD parameter-recovery metrics centered on `MMCS`, `ML2R`, and paper-relevant loss summaries.
 - `results.py`: target-bundle save/load helpers.
 - `run_parameter_recovery.py`: unified CLI for target training, SPD, and analysis.
+- `run_tms_single_with_analysis.py`: single-run wrapper for pretrained TMS SPD configs that saves a rich analysis bundle.
 - `aggregate_results.py`: aggregate `parameter_recovery_analysis.json` files into a JSONL table.
 - `experiments/`: concrete experiment folders with target YAMLs, dedicated SPD YAMLs, and per-experiment notes.
 
@@ -78,6 +79,14 @@ python -m koko_experiments.parameter_recovery.run_parameter_recovery \
   koko_experiments/parameter_recovery/experiments/exp_01_axis_aligned/resid_mlp.yaml
 ```
 
+For a pretrained TMS SPD YAML that should save directly into the parameter-recovery results folder, use:
+
+```bash
+source .venv/bin/activate
+python -m koko_experiments.parameter_recovery.run_tms_single_with_analysis \
+  koko_experiments/parameter_recovery/experiments/exp_04_tms_5_2_paper_with_faithfulness_train/tms_5-2_cpu_paper_with_faithfulness_train.yaml
+```
+
 Target training can now use either:
 
 - a streamed synthetic distribution when `target.train_num_samples` is omitted
@@ -90,7 +99,7 @@ Use `target.eval_num_samples` the same way for evaluation. This only changes tar
 By default, outputs are written under `SPD_OUT_DIR`:
 
 - target bundles: `SPD_OUT_DIR/parameter_recovery/targets/<run_name>_<timestamp>/`
-- summary-only analysis bundles: `SPD_OUT_DIR/parameter_recovery/results/<run_name>_<timestamp>/`
+- analysis bundles: `SPD_OUT_DIR/parameter_recovery/results/<run_name>_<timestamp>/`
 - SPD runs: `SPD_OUT_DIR/spd/<run_id>/`
 
 The SPD run still contains:
@@ -108,6 +117,8 @@ This file contains:
 - total `faithfulness_mse`
 - paper-relevant loss summaries
 - layerwise recovery breakdown
+
+Single-run wrappers write only this rich analysis JSON into the results bundle. Separate summary files are produced only by replicate-oriented scripts such as `run_tms_paper_replicates.py`.
 
 ## Suggested order
 
