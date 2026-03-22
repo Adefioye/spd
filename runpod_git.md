@@ -1,6 +1,6 @@
 # RunPod Git Setup
 
-This note covers the git steps for cloning your fork on RunPod and checking out the `feature_recovery` branch.
+This note covers the git steps for cloning your fork on RunPod and checking out the `<branch_name>` branch.
 
 ## Clone the repo on RunPod
 
@@ -12,16 +12,16 @@ git clone https://github.com/Adefioye/spd.git koko_spd
 cd /workspace/koko_spd
 ```
 
-## Check out `feature_recovery`
+## Check out `<branch_name>`
 
 If the branch already exists on GitHub:
 
 ```bash
 git fetch origin
-git checkout feature_recovery
+git checkout <branch_name>
 ```
 
-If `git checkout feature_recovery` does not find a local branch yet, create the local tracking branch explicitly:
+If `git checkout <branch_name>` does not find a local branch yet, create the local tracking branch explicitly:
 
 ```bash
 git fetch origin
@@ -64,7 +64,7 @@ If you do not see `origin/feature_recovery`, then the branch has not been pushed
 
 ```bash
 git fetch origin
-git checkout -b feature_recovery origin/feature_recovery
+git checkout -b feature_recovery origin/<branch_name>
 ```
 
 ## After checkout
