@@ -10,6 +10,8 @@ This folder contains SPD-only parameter-recovery experiments built on synthetic 
 - `results.py`: target-bundle save/load helpers.
 - `run_parameter_recovery.py`: unified CLI for target training, SPD, and analysis.
 - `run_tms_single_with_analysis.py`: single-run wrapper for pretrained TMS SPD configs that saves a rich analysis bundle.
+- `run_tms_hyperparameter_grid_search.py`: full grid-search runner for pretrained TMS SPD configs with compact per-sweep metric exports.
+- `summarize_tms_hyperparameter_grid_search.py`: rank an existing TMS SPD sweep result root and save the top hyperparameter settings.
 - `aggregate_results.py`: aggregate `parameter_recovery_analysis.json` files into a JSONL table.
 - `experiments/`: concrete experiment folders with target YAMLs, dedicated SPD YAMLs, and per-experiment notes.
 
@@ -87,6 +89,14 @@ python -m koko_experiments.parameter_recovery.run_tms_single_with_analysis \
   koko_experiments/parameter_recovery/experiments/exp_04_tms_5_2_paper_with_faithfulness_train/tms_5-2_cpu_paper_with_faithfulness_train.yaml
 ```
 
+For the full `exp_05` grid search over the five SPD paper hyperparameters, use:
+
+```bash
+source .venv/bin/activate
+python -m koko_experiments.parameter_recovery.run_tms_hyperparameter_grid_search \
+  koko_experiments/parameter_recovery/experiments/exp_05_tms_5_2_hyperparameter_grid_search
+```
+
 Target training can now use either:
 
 - a streamed synthetic distribution when `target.train_num_samples` is omitted
@@ -119,6 +129,13 @@ This file contains:
 - layerwise recovery breakdown
 
 Single-run wrappers write only this rich analysis JSON into the results bundle. Separate summary files are produced only by replicate-oriented scripts such as `run_tms_paper_replicates.py`.
+
+The `exp_05` grid-search runner writes a different, intentionally compact result layout:
+
+- `configs/`: one materialized SPD config per sweep
+- `per_run_metrics/`: one JSON per sweep with only swept hyperparameters plus aggregate `MMCS` and `ML2R`
+- `mmcs_ml2r_sweep_summary.json`: all sweeps ranked by `0.5 * (MMCS + ML2R)`
+- `top_5_hyperparameter_combinations.json`: the best five runs under that ranking
 
 ## Suggested order
 
