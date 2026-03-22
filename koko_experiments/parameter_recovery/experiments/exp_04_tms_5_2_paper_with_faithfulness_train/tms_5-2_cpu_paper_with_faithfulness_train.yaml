@@ -2,7 +2,7 @@
 
 # --- WandB ---
 wandb_project: spd_tms_5_2
-wandb_run_name: ""
+wandb_run_name: "exp04_nmasks1_faith1.00e+00_stochrecon1.00e+00_stochreconlayer1.00e+00_p1.00e+00_impmin3.00e-03_C20_sd0_lr1.00e-03_bs4096_ft5_hid2_hlayers0_steps40000"
 wandb_run_name_prefix: ""
 
 # --- General ---

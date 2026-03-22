@@ -35,7 +35,7 @@ def _calc_layer_alignment_stats(
     component_u: Tensor,
     eps: float = 1e-12,
 ) -> tuple[Tensor, Tensor, float]:
-    component_column_vectors = torch.einsum("d_in c, c d_out->c d_in d_out", component_v, component_u)
+    component_column_vectors = torch.einsum("ic,co->cio", component_v, component_u)
     # Transpose to (d_in, d_out) 
     target_columns = target_weight.T
 
@@ -45,7 +45,7 @@ def _calc_layer_alignment_stats(
     component_unit = component_column_vectors / component_norm
     target_unit = target_columns / target_norm
 
-    cosine_sim = torch.einsum("c d_in d_out, d_in, d_out->c d_in", component_unit, target_unit)
+    cosine_sim = torch.einsum("cio,io->ci", component_unit, target_unit)
     max_cos, max_idx = cosine_sim.max(dim=0)
 
     matched_component_columns = component_column_vectors[
@@ -53,7 +53,7 @@ def _calc_layer_alignment_stats(
     ]
     l2_ratio = matched_component_columns.norm(dim=-1) / target_columns.norm(dim=-1).clamp_min(eps)
 
-    reconstructed_weight = torch.einsum("d_in c, c d_out->d_out d_in", component_v, component_u)
+    reconstructed_weight = torch.einsum("ic,co->oi", component_v, component_u)
     faithfulness_mse = float(torch.mean((reconstructed_weight - target_weight) ** 2).item())
     return max_cos, l2_ratio, faithfulness_mse
 
