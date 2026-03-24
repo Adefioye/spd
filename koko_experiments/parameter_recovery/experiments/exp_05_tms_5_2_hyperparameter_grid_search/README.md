@@ -42,10 +42,17 @@ This command does all of the following:
 
 - materializes one labeled SPD config per hyperparameter combination
 - runs all `180` SPD sweeps
+- resumes the latest partial result folder by default if a previous `exp_05` sweep was interrupted
 - computes only aggregate recovery metrics per sweep: all-layer `MMCS` and all-layer `ML2R`
 - saves one compact JSON per sweep under `per_run_metrics/`
 - writes a full `mmcs_ml2r_sweep_summary.json` ranked by `0.5 * (MMCS + ML2R)`
 - writes `top_5_hyperparameter_combinations.json`
+
+W&B naming:
+
+- `wandb_run_name` includes the full hyperparameter label for the sweep combination
+- `wandb_project` is also stamped with the experiment identifier and hyperparameter label for the
+  run, so interrupted combinations are easy to identify unambiguously in W&B
 
 Where to find the final result:
 
@@ -60,4 +67,25 @@ To rerun only the ranking step on an existing result folder:
 source .venv/bin/activate
 python -m koko_experiments.parameter_recovery.summarize_tms_hyperparameter_grid_search \
   /path/to/SPD_OUT_DIR/parameter_recovery/results/exp_05_tms_5_2_hyperparameter_grid_search_<timestamp>
+```
+
+Resume behavior:
+
+- default behavior: resume the latest incomplete `exp_05` result folder automatically
+- resume a specific partial result folder:
+
+```bash
+source .venv/bin/activate
+python -m koko_experiments.parameter_recovery.run_tms_hyperparameter_grid_search \
+  koko_experiments/parameter_recovery/experiments/exp_05_tms_5_2_hyperparameter_grid_search \
+  --result-root /path/to/SPD_OUT_DIR/parameter_recovery/results/exp_05_tms_5_2_hyperparameter_grid_search_<timestamp>
+```
+
+- force a brand-new sweep instead of resuming:
+
+```bash
+source .venv/bin/activate
+python -m koko_experiments.parameter_recovery.run_tms_hyperparameter_grid_search \
+  koko_experiments/parameter_recovery/experiments/exp_05_tms_5_2_hyperparameter_grid_search \
+  --fresh
 ```
