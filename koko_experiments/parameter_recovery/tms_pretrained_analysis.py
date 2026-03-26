@@ -8,29 +8,14 @@ from koko_experiments.parameter_recovery.metrics import (
     summarize_spd_evaluation,
 )
 from spd.configs import Config
-from spd.experiments.tms.configs import TMSModelConfig
-from spd.experiments.tms.models import TMSModel
+from spd.experiments.tms.models import TMSModel, TMSTargetRunInfo
 from spd.models.component_model import ComponentModel
 from spd.utils.module_utils import expand_module_patterns
 
 
 def load_tms_target_model_from_spd_run(spd_run_dir: Path) -> TMSModel:
-    target_state = torch.load(spd_run_dir / "tms.pth", map_location="cpu", weights_only=True)
-    linear1_weight = target_state["linear1.weight"]
-    linear2_weight = target_state["linear2.weight"]
-    linear2_bias = target_state["linear2.bias"]
-    target_config = TMSModelConfig(
-        n_features=linear1_weight.shape[1],
-        n_hidden=linear1_weight.shape[0],
-        n_hidden_layers=0,
-        tied_weights=torch.allclose(linear2_weight, linear1_weight.T, atol=1e-5, rtol=1e-4),
-        init_bias_to_zero=torch.allclose(
-            linear2_bias, torch.zeros_like(linear2_bias), atol=1e-7, rtol=0
-        ),
-        device="cpu",
-    )
-    target_model = TMSModel(target_config)
-    target_model.load_state_dict(target_state)
+    run_info = TMSTargetRunInfo.from_path(spd_run_dir / "tms.pth")
+    target_model = TMSModel.from_run_info(run_info)
     target_model.eval()
     target_model.requires_grad_(False)
     return target_model

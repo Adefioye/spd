@@ -71,7 +71,7 @@ def main(
         launch_id=launch_id,
         evals_id=evals_id,
         sweep_params=parse_sweep_params(sweep_params_json),
-        target_model_train_config=target_model.config,
+        target_model_train_config=target_run_info.config,
         tied_weights=tied_weights,
     )
 
