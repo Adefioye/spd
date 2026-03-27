@@ -183,7 +183,12 @@ cython_debug/
 .claude/worktrees
 
 # Results and model checkpoints
-spd_out/
+!spd_out/
+spd_out/*
+!spd_out/parameter_recovery/
+spd_out/parameter_recovery/*
+!spd_out/parameter_recovery/results/
+!spd_out/parameter_recovery/results/**
 
 # Folders not in use
 docs/

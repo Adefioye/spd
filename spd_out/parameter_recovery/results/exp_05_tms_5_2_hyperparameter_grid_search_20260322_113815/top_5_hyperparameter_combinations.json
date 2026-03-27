@@ -1,0 +1,121 @@
+{
+  "experiment_name": "exp_05_tms_5_2_hyperparameter_grid_search",
+  "ranking_metric": "combined_score = 0.5 * (mmcs + ml2r)",
+  "result_root": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_05_tms_5_2_hyperparameter_grid_search_20260322_113815",
+  "runs": [
+    {
+      "analysis_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-c631549e/parameter_recovery_analysis.json",
+      "combined_score": 0.9290571808815002,
+      "config_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_05_tms_5_2_hyperparameter_grid_search_20260322_113815/configs/nmasks04_sr5.00e-01_srl5.00e-01_imp3.00e-03_p2.00e+00.yaml",
+      "experiment_name": "exp_05_tms_5_2_hyperparameter_grid_search",
+      "hyperparameters": {
+        "importance_minimality_coeff": 0.003,
+        "importance_minimality_pnorm": 2.0,
+        "n_mask_samples": 4,
+        "stochastic_recon_coeff": 0.5,
+        "stochastic_recon_layerwise_coeff": 0.5
+      },
+      "metrics": {
+        "ml2r": 0.9644294381141663,
+        "mmcs": 0.8936849236488342
+      },
+      "run_id": "s-c631549e",
+      "run_index": 100,
+      "run_label": "nmasks04_sr5.00e-01_srl5.00e-01_imp3.00e-03_p2.00e+00",
+      "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-c631549e",
+      "wandb_project": "spd_tms_5_2_hyperparameter_grid_search__exp_05__nmasks04_sr5.00e-01_srl5.00e-01_imp3.00e-03_p2.00e+00",
+      "wandb_run_name": "exp05_nmasks04_sr5.00e-01_srl5.00e-01_imp3.00e-03_p2.00e+00_faith1.00e+00_stochrecon5.00e-01_stochreconlayer5.00e-01_p2.00e+00_impmin3.00e-03_C20_sd0_lr1.00e-03_bs4096_ft5_steps5000"
+    },
+    {
+      "analysis_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-704af715/parameter_recovery_analysis.json",
+      "combined_score": 0.9189649522304535,
+      "config_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_05_tms_5_2_hyperparameter_grid_search_20260322_113815/configs/nmasks01_sr5.00e-01_srl5.00e-01_imp3.00e-03_p2.00e+00.yaml",
+      "experiment_name": "exp_05_tms_5_2_hyperparameter_grid_search",
+      "hyperparameters": {
+        "importance_minimality_coeff": 0.003,
+        "importance_minimality_pnorm": 2.0,
+        "n_mask_samples": 1,
+        "stochastic_recon_coeff": 0.5,
+        "stochastic_recon_layerwise_coeff": 0.5
+      },
+      "metrics": {
+        "ml2r": 0.9436518549919128,
+        "mmcs": 0.8942780494689941
+      },
+      "run_id": "s-704af715",
+      "run_index": 10,
+      "run_label": "nmasks01_sr5.00e-01_srl5.00e-01_imp3.00e-03_p2.00e+00",
+      "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-704af715",
+      "wandb_run_name": "exp05_nmasks01_faith1.00e+00_stochrecon5.00e-01_stochreconlayer5.00e-01_p2.00e+00_impmin3.00e-03_C20_sd0_lr1.00e-03_bs4096_ft5_steps5000"
+    },
+    {
+      "analysis_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-a88e196b/parameter_recovery_analysis.json",
+      "combined_score": 0.9118243753910065,
+      "config_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_05_tms_5_2_hyperparameter_grid_search_20260322_113815/configs/nmasks04_sr5.00e-01_srl1.00e+00_imp3.00e-03_p2.00e+00.yaml",
+      "experiment_name": "exp_05_tms_5_2_hyperparameter_grid_search",
+      "hyperparameters": {
+        "importance_minimality_coeff": 0.003,
+        "importance_minimality_pnorm": 2.0,
+        "n_mask_samples": 4,
+        "stochastic_recon_coeff": 0.5,
+        "stochastic_recon_layerwise_coeff": 1.0
+      },
+      "metrics": {
+        "ml2r": 0.9296315312385559,
+        "mmcs": 0.894017219543457
+      },
+      "run_id": "s-a88e196b",
+      "run_index": 110,
+      "run_label": "nmasks04_sr5.00e-01_srl1.00e+00_imp3.00e-03_p2.00e+00",
+      "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-a88e196b",
+      "wandb_project": "tms-5-2-hyperparams-grid-search",
+      "wandb_run_name": "exp05_nmasks04_sr5.00e-01_srl1.00e+00_imp3.00e-03_p2.00e+00"
+    },
+    {
+      "analysis_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-c812810f/parameter_recovery_analysis.json",
+      "combined_score": 0.9108873307704926,
+      "config_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_05_tms_5_2_hyperparameter_grid_search_20260322_113815/configs/nmasks01_sr5.00e-01_srl1.00e+00_imp3.00e-03_p2.00e+00.yaml",
+      "experiment_name": "exp_05_tms_5_2_hyperparameter_grid_search",
+      "hyperparameters": {
+        "importance_minimality_coeff": 0.003,
+        "importance_minimality_pnorm": 2.0,
+        "n_mask_samples": 1,
+        "stochastic_recon_coeff": 0.5,
+        "stochastic_recon_layerwise_coeff": 1.0
+      },
+      "metrics": {
+        "ml2r": 0.9275475740432739,
+        "mmcs": 0.8942270874977112
+      },
+      "run_id": "s-c812810f",
+      "run_index": 20,
+      "run_label": "nmasks01_sr5.00e-01_srl1.00e+00_imp3.00e-03_p2.00e+00",
+      "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-c812810f",
+      "wandb_run_name": "exp05_nmasks01_faith1.00e+00_stochrecon5.00e-01_stochreconlayer1.00e+00_p2.00e+00_impmin3.00e-03_C20_sd0_lr1.00e-03_bs4096_ft5_steps5000"
+    },
+    {
+      "analysis_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-a40e3e93/parameter_recovery_analysis.json",
+      "combined_score": 0.9077398478984833,
+      "config_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_05_tms_5_2_hyperparameter_grid_search_20260322_113815/configs/nmasks04_sr1.00e+00_srl5.00e-01_imp3.00e-03_p2.00e+00.yaml",
+      "experiment_name": "exp_05_tms_5_2_hyperparameter_grid_search",
+      "hyperparameters": {
+        "importance_minimality_coeff": 0.003,
+        "importance_minimality_pnorm": 2.0,
+        "n_mask_samples": 4,
+        "stochastic_recon_coeff": 1.0,
+        "stochastic_recon_layerwise_coeff": 0.5
+      },
+      "metrics": {
+        "ml2r": 0.9201946258544922,
+        "mmcs": 0.8952850699424744
+      },
+      "run_id": "s-a40e3e93",
+      "run_index": 130,
+      "run_label": "nmasks04_sr1.00e+00_srl5.00e-01_imp3.00e-03_p2.00e+00",
+      "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-a40e3e93",
+      "wandb_project": "tms-5-2-hyperparams-grid-search",
+      "wandb_run_name": "exp05_nmasks04_sr1.00e+00_srl5.00e-01_imp3.00e-03_p2.00e+00"
+    }
+  ],
+  "top_k": 5
+}

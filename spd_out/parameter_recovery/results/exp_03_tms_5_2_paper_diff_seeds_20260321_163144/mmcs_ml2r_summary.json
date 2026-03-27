@@ -1,0 +1,65 @@
+{
+  "base_config_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_03_tms_5_2_paper_diff_seeds_20260321_163144/tms_5-2_cpu_paper.yaml",
+  "experiment_name": "exp_03_tms_5_2_paper_diff_seeds",
+  "layers": {
+    "linear1": {
+      "ML2R": {
+        "mean": 0.9580026507377625,
+        "std": 0.08916548316190333
+      },
+      "MMCS": {
+        "mean": 0.9999816179275512,
+        "std": 8.246534708401065e-06
+      }
+    },
+    "linear2": {
+      "ML2R": {
+        "mean": 0.6253010630607605,
+        "std": 0.00017633355948268114
+      },
+      "MMCS": {
+        "mean": 0.6345033764839172,
+        "std": 0.0012786948132929056
+      }
+    }
+  },
+  "n_runs": 5,
+  "result_root": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_03_tms_5_2_paper_diff_seeds_20260321_163144",
+  "runs": [
+    {
+      "analysis_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_03_tms_5_2_paper_diff_seeds_20260321_163144/seed_0_parameter_recovery_analysis.json",
+      "run_id": "s-184f2987",
+      "run_label": "seed_0",
+      "seed": 0,
+      "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-184f2987"
+    },
+    {
+      "analysis_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_03_tms_5_2_paper_diff_seeds_20260321_163144/seed_1_parameter_recovery_analysis.json",
+      "run_id": "s-cc0a680a",
+      "run_label": "seed_1",
+      "seed": 1,
+      "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-cc0a680a"
+    },
+    {
+      "analysis_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_03_tms_5_2_paper_diff_seeds_20260321_163144/seed_2_parameter_recovery_analysis.json",
+      "run_id": "s-7d1a5faf",
+      "run_label": "seed_2",
+      "seed": 2,
+      "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-7d1a5faf"
+    },
+    {
+      "analysis_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_03_tms_5_2_paper_diff_seeds_20260321_163144/seed_3_parameter_recovery_analysis.json",
+      "run_id": "s-8a745bc3",
+      "run_label": "seed_3",
+      "seed": 3,
+      "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-8a745bc3"
+    },
+    {
+      "analysis_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/parameter_recovery/results/exp_03_tms_5_2_paper_diff_seeds_20260321_163144/seed_4_parameter_recovery_analysis.json",
+      "run_id": "s-0d019b10",
+      "run_label": "seed_4",
+      "seed": 4,
+      "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-0d019b10"
+    }
+  ]
+}
