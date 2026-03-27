@@ -33,7 +33,14 @@ if [ ! -d "${REPO_DIR}" ]; then
 fi
 
 apt-get update -qq
-apt-get install -y -qq curl git build-essential ca-certificates
+apt-get install -y -qq curl git build-essential ca-certificates zsh nvidia-modprobe
+
+mkdir -p /dev/char
+if [ -e /dev/nvidiactl ]; then ln -sf /dev/nvidiactl /dev/char/195:255; fi
+if [ -e /dev/nvidia-modeset ]; then ln -sf /dev/nvidia-modeset /dev/char/195:254; fi
+if [ -e /dev/nvidia5 ]; then ln -sf /dev/nvidia5 /dev/char/195:5; fi
+if [ -e /dev/nvidia-uvm ]; then ln -sf /dev/nvidia-uvm /dev/char/506:0; fi
+if [ -e /dev/nvidia-uvm-tools ]; then ln -sf /dev/nvidia-uvm-tools /dev/char/506:1; fi
 
 if ! command -v uv >/dev/null 2>&1; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
