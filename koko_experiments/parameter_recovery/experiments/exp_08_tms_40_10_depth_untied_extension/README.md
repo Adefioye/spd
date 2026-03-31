@@ -11,6 +11,14 @@ The five runs are:
 - `exp_08_tms_40_10_5layer_untied_steps40000`
 - `exp_08_tms_40_10_6layer_untied_steps40000`
 
+Tied counterparts are also supported in the same folder via `exp_08_tied_batch.yaml`:
+
+- `exp_08_tms_40_10_2layer_tied_steps40000`
+- `exp_08_tms_40_10_3layer_tied_steps40000`
+- `exp_08_tms_40_10_4layer_tied_steps40000`
+- `exp_08_tms_40_10_5layer_tied_steps40000`
+- `exp_08_tms_40_10_6layer_tied_steps40000`
+
 Layer naming in this folder:
 
 - `2layer`: standard `linear1 -> linear2` TMS, so `n_hidden_layers=0`
@@ -57,6 +65,16 @@ This launcher:
 - defaults to `--device cuda`
 - writes a central stdout/stderr log into `logs/`
 
+To run the tied 2L-6L batch in the same folder:
+
+```bash
+export SPD_OUT_DIR="$PWD/spd_out"
+bash koko_experiments/parameter_recovery/experiments/exp_08_tms_40_10_depth_untied_extension/launch_tmux.sh \
+  exp08_tms_40_10_tied \
+  cuda \
+  exp_08_tied_batch.yaml
+```
+
 To attach:
 
 ```bash
@@ -82,6 +100,8 @@ python koko_experiments/parameter_recovery/experiments/exp_08_tms_40_10_depth_un
   --device cuda \
   --run-names exp_08_tms_40_10_2layer_untied_steps40000,exp_08_tms_40_10_3layer_untied_steps40000
 ```
+
+For tied runs, swap to `exp_08_tied_batch.yaml` and tied run names.
 
 ## Reuse Saved Targets
 

@@ -1,0 +1,54 @@
+{
+  "run_name": "exp_08_tms_40_10_3layer_tied_steps40000",
+  "target_model_type": "tms",
+  "spd_run_dir": "/workspace/spd/spd_out/spd/s-fe6ddc8d",
+  "target_run_dir": "/workspace/spd/spd_out/train/t-693f7c54/tms.pth",
+  "summary": {
+    "recovery_metrics": {
+      "mmcs": 0.7744253873825073,
+      "ml2r": 0.6981936693191528
+    },
+    "faithfulness_mse": 0.00031687372260623506,
+    "ci_summary": {
+      "hidden_layers.0": {
+        "mean_top1_ci": 0.9817717671394348,
+        "mean_ci_entropy": 1.8041114807128906
+      },
+      "linear1": {
+        "mean_top1_ci": 0.9641377329826355,
+        "mean_ci_entropy": 0.6682689785957336
+      },
+      "linear2": {
+        "mean_top1_ci": 0.9782484769821167,
+        "mean_ci_entropy": 2.9981324672698975
+      }
+    }
+  },
+  "losses": {
+    "train/loss/total": 0.0012369417818263173,
+    "loss/StochasticHiddenActsReconLoss": 0.06335806101560593,
+    "loss/ImportanceMinimalityLoss": 9.009725570678711,
+    "loss/StochasticReconLoss": 0.00020187576592434198,
+    "loss/StochasticReconLayerwiseLoss": 0.0001109007716877386
+  },
+  "layers": [
+    {
+      "layer_name": "linear1",
+      "mmcs": 0.8926486968994141,
+      "ml2r": 0.8961305618286133,
+      "faithfulness_mse": 0.00020075451175216585
+    },
+    {
+      "layer_name": "linear2",
+      "mmcs": 0.43521490693092346,
+      "ml2r": 0.11631079763174057,
+      "faithfulness_mse": 0.00020075455540791154
+    },
+    {
+      "layer_name": "hidden_layers.0",
+      "mmcs": 0.6407424211502075,
+      "ml2r": 0.4883285164833069,
+      "faithfulness_mse": 0.0012458271812647581
+    }
+  ]
+}

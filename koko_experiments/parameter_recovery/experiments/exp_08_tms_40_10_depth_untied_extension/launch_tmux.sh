@@ -5,10 +5,12 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../../../.. && pwd)"
 EXPERIMENT_DIR="$REPO_ROOT/koko_experiments/parameter_recovery/experiments/exp_08_tms_40_10_depth_untied_extension"
 SESSION_NAME="${1:-exp08_tms_40_10_untied}"
 DEVICE="${2:-cuda}"
+BATCH_CONFIG_NAME="${3:-exp_08_batch.yaml}"
 STAMP="$(date +%Y%m%d_%H%M%S)"
 LOG_DIR="$EXPERIMENT_DIR/logs"
 LOG_PATH="$LOG_DIR/exp_08_batch_${STAMP}.log"
 RUNNER_PATH="/tmp/${SESSION_NAME}_exp08_runner.sh"
+BATCH_CONFIG_PATH="$EXPERIMENT_DIR/$BATCH_CONFIG_NAME"
 
 mkdir -p "$LOG_DIR"
 
@@ -19,6 +21,11 @@ fi
 
 if [[ "$DEVICE" != "cpu" && "$DEVICE" != cuda* ]]; then
   echo "Unsupported device: $DEVICE (expected cpu or cuda[:index])" >&2
+  exit 1
+fi
+
+if [[ ! -f "$BATCH_CONFIG_PATH" ]]; then
+  echo "Batch config not found: $BATCH_CONFIG_PATH" >&2
   exit 1
 fi
 
@@ -46,7 +53,7 @@ except Exception as exc:
 print("cuda_preflight=ok")
 PY
 fi
-python "$EXPERIMENT_DIR/run_exp_08_batch.py" "$EXPERIMENT_DIR/exp_08_batch.yaml" --device "$DEVICE"
+python "$EXPERIMENT_DIR/run_exp_08_batch.py" "$BATCH_CONFIG_PATH" --device "$DEVICE"
 EOF
 chmod +x "$RUNNER_PATH"
 
@@ -54,5 +61,6 @@ tmux new-session -d -s "$SESSION_NAME" /bin/bash -lc "$RUNNER_PATH"
 
 echo "session_name=$SESSION_NAME"
 echo "device=$DEVICE"
+echo "batch_config=$BATCH_CONFIG_PATH"
 echo "log_path=$LOG_PATH"
 echo "attach_cmd=tmux attach -t $SESSION_NAME"
