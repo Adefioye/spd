@@ -74,6 +74,10 @@ cover/
 
 # Django stuff:
 *.log
+koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/logs/
+koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/materialized_configs/
+koko_experiments/parameter_recovery/experiments/exp_08_tms_40_10_depth_untied_extension/logs/
+koko_experiments/parameter_recovery/experiments/exp_08_tms_40_10_depth_untied_extension/materialized_configs/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
