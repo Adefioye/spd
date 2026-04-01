@@ -12,11 +12,11 @@ seed: 0
 steps: 10000
 synced_inputs: null
 tms_model_config:
-  device: cuda
+  device: cpu
   init_bias_to_zero: true
   n_features: 40
   n_hidden: 10
-  n_hidden_layers: 3
+  n_hidden_layers: 4
   tied_weights: false
 wandb_project: spd_tms_40_10_exp08
 weight_decay: 0.01
