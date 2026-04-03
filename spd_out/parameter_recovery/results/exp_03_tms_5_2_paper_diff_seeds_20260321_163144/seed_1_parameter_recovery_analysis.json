@@ -1,0 +1,32 @@
+{
+  "checkpoint": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-cc0a680a/model_10000.pth",
+  "experiment_name": "exp_03_tms_5_2_paper_diff_seeds",
+  "layers": {
+    "linear1": {
+      "ML2R": 0.9978981018066406,
+      "MMCS": 0.9999749064445496,
+      "effective_components@1pct_max_strength": 5.0,
+      "faithfulness_mse": 4.9370778469892684e-06,
+      "matched_component_norm_mean": 1.1300294399261475,
+      "target_column_norm_mean": 1.1324081420898438
+    },
+    "linear2": {
+      "ML2R": 0.6253262758255005,
+      "MMCS": 0.6355235576629639,
+      "effective_components@1pct_max_strength": 5.0,
+      "faithfulness_mse": 4.9370778469892684e-06,
+      "matched_component_norm_mean": 1.1196649074554443,
+      "target_column_norm_mean": 1.79052734375
+    }
+  },
+  "run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-cc0a680a",
+  "run_id": "s-cc0a680a",
+  "run_index": 2,
+  "run_label": "seed_1",
+  "seed": 1,
+  "target_model": {
+    "n_features": 5,
+    "n_hidden": 2,
+    "n_hidden_layers": 0
+  }
+}

@@ -1,0 +1,84 @@
+wandb_project: null
+wandb_run_name: null
+wandb_run_name_prefix: ""
+seed: 0
+n_mask_samples: 1
+ci_config:
+  mode: layerwise
+  fn_type: shared_mlp
+  hidden_dims: [64]
+sigmoid_type: leaky_hard
+module_info:
+  - module_pattern: "layers.*.mlp_in"
+    C: 128
+  - module_pattern: "layers.*.mlp_out"
+    C: 128
+identity_module_info: null
+use_delta_component: true
+loss_metric_configs:
+  - classname: ImportanceMinimalityLoss
+    coeff: 1e-4
+    pnorm: 2.0
+    beta: 0.0
+  - classname: StochasticReconSubsetLoss
+    coeff: 2.0
+    routing:
+      type: uniform_k_subset
+  - classname: PGDReconSubsetLoss
+    coeff: 2.0
+    init: random
+    step_size: 1.0
+    n_steps: 1
+    mask_scope: shared_across_batch
+    routing:
+      type: uniform_k_subset
+  - classname: FaithfulnessLoss
+    coeff: 0.0
+output_loss_type: mse
+batch_size: 2048
+eval_batch_size: 2048
+steps: 16000
+lr_schedule:
+  start_val: 0.0005
+  fn_type: cosine
+  warmup_pct: 0.0
+  final_val_frac: 0.0
+faithfulness_warmup_steps: 200
+faithfulness_warmup_lr: 0.01
+faithfulness_warmup_weight_decay: 0.0
+train_log_freq: 100
+eval_freq: 500
+n_eval_steps: 100
+slow_eval_freq: 4000
+slow_eval_on_first_step: true
+save_freq: 4000
+ci_alive_threshold: 0.1
+eval_metric_configs:
+  - classname: CIHistograms
+    n_batches_accum: 5
+  - classname: ComponentActivationDensity
+  - classname: PermutedCIPlots
+    identity_patterns: ["layers.*.mlp_in"]
+    dense_patterns: ["layers.*.mlp_out"]
+  - classname: IdentityCIError
+    identity_ci:
+      - layer_pattern: "layers.*.mlp_in"
+        n_features: 32
+    dense_ci:
+      - layer_pattern: "layers.*.mlp_out"
+        k: 24
+  - classname: CI_L0
+    groups: null
+  - classname: CIMeanPerComponent
+  - classname: StochasticHiddenActsReconLoss
+  - classname: PGDReconLoss
+    init: random
+    step_size: 0.1
+    n_steps: 20
+    mask_scope: shared_across_batch
+pretrained_model_class: spd.experiments.resid_mlp.models.ResidMLP
+pretrained_model_path: REPLACED_BY_RUNNER
+task_config:
+  task_name: resid_mlp
+  feature_probability: 0.1
+  data_generation_type: at_least_zero_active

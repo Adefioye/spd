@@ -14,9 +14,9 @@ ci_config:
 sigmoid_type: "leaky_hard"
 module_info:
   - module_pattern: "linear1"
-    C: 20
+    C: 8
   - module_pattern: "linear2"
-    C: 20
+    C: 8
 use_delta_component: true
 
 loss_metric_configs:

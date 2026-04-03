@@ -36,6 +36,11 @@ dependencies = [
     "httpx>=0.28.0",
     "zstandard", # For streaming datasets
     "kaleido==0.2.1",
+    "sae-lens>=6.39.0",
+    "plotly>=6.6.0",
+    "pandas>=2.3.3",
+    "pillow>=12.0.0",
+    "nbformat>=4.2.0",
     "numba>=0.64.0",
 ]
 

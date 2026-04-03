@@ -1,0 +1,84 @@
+{
+  "run_name": "exp_07_tms_5_2_6layer_tied",
+  "target_model_type": "tms",
+  "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-376b08ec",
+  "target_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/train/t-0c239c90/tms.pth",
+  "summary": {
+    "recovery_metrics": {
+      "mmcs": 0.8785675764083862,
+      "ml2r": 1.1933420896530151
+    },
+    "faithfulness_mse": 3.2388289885905884e-05,
+    "ci_summary": {
+      "hidden_layers.0": {
+        "mean_top1_ci": 0.5880514979362488,
+        "mean_ci_entropy": 0.0001236198004335165
+      },
+      "hidden_layers.1": {
+        "mean_top1_ci": 0.5842837691307068,
+        "mean_ci_entropy": 0.0
+      },
+      "hidden_layers.2": {
+        "mean_top1_ci": 0.6000000238418579,
+        "mean_ci_entropy": 0.0
+      },
+      "hidden_layers.3": {
+        "mean_top1_ci": 0.6000000238418579,
+        "mean_ci_entropy": 0.0
+      },
+      "linear1": {
+        "mean_top1_ci": 0.6000000238418579,
+        "mean_ci_entropy": 0.0
+      },
+      "linear2": {
+        "mean_top1_ci": 0.6000000238418579,
+        "mean_ci_entropy": 0.0
+      }
+    }
+  },
+  "losses": {
+    "train/loss/total": 0.0021395846270024776,
+    "loss/StochasticReconLoss": 0.0002104187005897984,
+    "loss/ImportanceMinimalityLoss": 0.6519961953163147,
+    "loss/StochasticHiddenActsReconLoss": 0.0013910839334130287,
+    "loss/StochasticReconLayerwiseLoss": 5.040422911406495e-05
+  },
+  "layers": [
+    {
+      "layer_name": "linear1",
+      "mmcs": 0.9453241229057312,
+      "ml2r": 2.8319220542907715,
+      "faithfulness_mse": 1.2356178558547981e-05
+    },
+    {
+      "layer_name": "linear2",
+      "mmcs": 0.7568389177322388,
+      "ml2r": 0.34290406107902527,
+      "faithfulness_mse": 1.2356178558547981e-05
+    },
+    {
+      "layer_name": "hidden_layers.0",
+      "mmcs": 0.9107498526573181,
+      "ml2r": 0.38756394386291504,
+      "faithfulness_mse": 5.191495074541308e-05
+    },
+    {
+      "layer_name": "hidden_layers.1",
+      "mmcs": 0.7147970199584961,
+      "ml2r": 0.6114286184310913,
+      "faithfulness_mse": 1.619956674403511e-05
+    },
+    {
+      "layer_name": "hidden_layers.2",
+      "mmcs": 0.8586469888687134,
+      "ml2r": 0.5273904204368591,
+      "faithfulness_mse": 0.00015105238708201796
+    },
+    {
+      "layer_name": "hidden_layers.3",
+      "mmcs": 0.9849141240119934,
+      "ml2r": 0.0009735343046486378,
+      "faithfulness_mse": 1.0546813427936286e-05
+    }
+  ]
+}

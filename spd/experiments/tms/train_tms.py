@@ -31,10 +31,15 @@ def train(
     steps: int,
     print_freq: int,
     lr_schedule: ScheduleConfig,
+    weight_decay: float,
 ) -> None:
     hooks = []
 
-    opt = torch.optim.AdamW(list(model.parameters()), lr=lr_schedule.start_val)
+    opt = torch.optim.AdamW(
+        list(model.parameters()),
+        lr=lr_schedule.start_val,
+        weight_decay=weight_decay,
+    )
 
     data_iter = iter(dataloader)
     with trange(steps, ncols=0) as t:
@@ -155,7 +160,7 @@ def get_model_and_dataloader(
     return model, dataloader
 
 
-def run_train(config: TMSTrainConfig, device: str) -> None:
+def run_train(config: TMSTrainConfig, device: str) -> Path:
     model, dataloader = get_model_and_dataloader(config, device)
 
     model_cfg = config.tms_model_config
@@ -164,6 +169,7 @@ def run_train(config: TMSTrainConfig, device: str) -> None:
         f"n-hidden-layers{model_cfg.n_hidden_layers}_"
         f"feat_prob{config.feature_probability}_seed{config.seed}"
     )
+    run_name += "_tied" if model_cfg.tied_weights else "_untied"
     if config.fixed_identity_hidden_layers:
         run_name += "_fixed-identity"
     elif config.fixed_random_hidden_layers:
@@ -200,6 +206,7 @@ def run_train(config: TMSTrainConfig, device: str) -> None:
         importance=1.0,
         print_freq=100,
         lr_schedule=config.lr_schedule,
+        weight_decay=config.weight_decay,
     )
 
     model_path = out_dir / "tms.pth"
@@ -280,7 +287,7 @@ def run_train(config: TMSTrainConfig, device: str) -> None:
 
     plt.tight_layout()
     plt.savefig(out_dir / "feature_representation_analysis.png", dpi=150, bbox_inches="tight")
-    plt.show()
+    plt.close()
 
     # Summary statistics
     logger.values(
@@ -331,6 +338,9 @@ def run_train(config: TMSTrainConfig, device: str) -> None:
     plot_cosine_similarity_distribution(model, filepath=fname_cos_sim)
     logger.info(f"Saved cosine similarity distribution to {fname_cos_sim}")
     logger.info(f"1/sqrt(n_hidden): {1 / np.sqrt(model_cfg.n_hidden)}")
+    if config.wandb_project:
+        wandb.finish()
+    return out_dir
 
 
 if __name__ == "__main__":
