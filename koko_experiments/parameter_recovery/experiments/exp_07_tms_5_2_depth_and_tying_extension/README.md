@@ -129,3 +129,174 @@ Each result bundle contains:
 The most recent batch index is also written to:
 
 - `materialized_configs/latest_run_index.json`
+
+## 4-Layer Untied Loss Ablations
+
+This folder also contains a focused SPD-only ablation batch for the existing
+`exp_07_tms_5_2_4layer_untied` target. These runs reuse the saved 4-layer untied target checkpoint
+and write outputs using the same `SPD_OUT_DIR/parameter_recovery/results/<run_name>_<timestamp>/`
+layout as the main `exp_07` runner.
+
+Runs:
+
+- `exp_07_tms_5_2_4layer_untied_loss_ablation_baseline`
+- `exp_07_tms_5_2_4layer_untied_loss_ablation_faithfulness`
+- `exp_07_tms_5_2_4layer_untied_loss_ablation_faithfulness_unmasked`
+- `exp_07_tms_5_2_4layer_untied_loss_ablation_faithfulness_impmin1e3`
+
+Config and runner:
+
+- batch config: [exp_07_4layer_untied_loss_ablations.yaml](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/exp_07_4layer_untied_loss_ablations.yaml)
+- runner: [run_exp_07_4layer_untied_loss_ablations.py](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/run_exp_07_4layer_untied_loss_ablations.py)
+- tmux launcher: [launch_4layer_untied_loss_ablations_tmux.sh](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_4layer_untied_loss_ablations_tmux.sh)
+
+Run in tmux:
+
+```bash
+export SPD_OUT_DIR="$PWD/spd_out"
+bash koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_4layer_untied_loss_ablations_tmux.sh
+```
+
+## 4-Layer Untied Faithfulness And P-Annealing Sweeps
+
+This folder also contains a follow-up SPD-only sweep on the same reused
+`exp_07_tms_5_2_4layer_untied` target checkpoint to test:
+
+- `FaithfulnessLoss` coefficients `0.25`, `0.5`, `1.0`, `2.0`
+- `ImportanceMinimalityLoss` p-annealing schedules `2.0 -> 1.0` and `2.0 -> 0.5`
+
+Files:
+
+- batch config: [exp_07_4layer_untied_faithfulness_panneal_sweeps.yaml](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/exp_07_4layer_untied_faithfulness_panneal_sweeps.yaml)
+- runner: [run_exp_07_4layer_untied_loss_ablations.py](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/run_exp_07_4layer_untied_loss_ablations.py)
+- tmux launcher: [launch_4layer_untied_faithfulness_panneal_sweeps_tmux.sh](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_4layer_untied_faithfulness_panneal_sweeps_tmux.sh)
+
+Run in tmux:
+
+```bash
+export SPD_OUT_DIR="$PWD/spd_out"
+bash koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_4layer_untied_faithfulness_panneal_sweeps_tmux.sh
+```
+
+## Untied 2L-6L Standard Setting
+
+This folder also contains a reuse-target batch that applies the current best 4-layer untied loss
+setting across all untied `TMS 5-2` depth variants from `2L` through `6L`:
+
+- `FaithfulnessLoss coeff=1.0`
+- `ImportanceMinimalityLoss coeff=3e-3`
+- `ImportanceMinimalityLoss pnorm=2.0`
+- `p_anneal_start_frac=0.0`
+- `p_anneal_final_p=1.0`
+- `p_anneal_end_frac=1.0`
+
+Files:
+
+- batch config: [exp_07_untied_standard_faithfulness_panneal.yaml](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/exp_07_untied_standard_faithfulness_panneal.yaml)
+- runner: [run_exp_07_4layer_untied_loss_ablations.py](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/run_exp_07_4layer_untied_loss_ablations.py)
+- tmux launcher: [launch_untied_standard_faithfulness_panneal_tmux.sh](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_untied_standard_faithfulness_panneal_tmux.sh)
+
+Run in tmux:
+
+```bash
+export SPD_OUT_DIR="$PWD/spd_out"
+bash koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_untied_standard_faithfulness_panneal_tmux.sh
+```
+
+## 6-Layer Untied Calibration Sweeps
+
+This folder also contains a focused reuse-target sweep on the saved
+`exp_07_tms_5_2_6layer_untied` target checkpoint to reduce the overgrowth seen from the
+`FaithfulnessLoss=1.0` and `p_anneal 2.0 -> 1.0` setting.
+
+Runs:
+
+- `exp_07_tms_5_2_6layer_untied_f050_p2to15`
+- `exp_07_tms_5_2_6layer_untied_f050_p2to125`
+- `exp_07_tms_5_2_6layer_untied_f075_p2to15`
+- `exp_07_tms_5_2_6layer_untied_f075_p2to125`
+
+These test:
+
+- `FaithfulnessLoss coeff=0.5` with `p_anneal 2.0 -> 1.5`
+- `FaithfulnessLoss coeff=0.5` with `p_anneal 2.0 -> 1.25`
+- `FaithfulnessLoss coeff=0.75` with `p_anneal 2.0 -> 1.5`
+- `FaithfulnessLoss coeff=0.75` with `p_anneal 2.0 -> 1.25`
+
+Files:
+
+- batch config: [exp_07_6layer_untied_calibration_sweeps.yaml](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/exp_07_6layer_untied_calibration_sweeps.yaml)
+- runner: [run_exp_07_4layer_untied_loss_ablations.py](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/run_exp_07_4layer_untied_loss_ablations.py)
+- tmux launcher: [launch_6layer_untied_calibration_sweeps_tmux.sh](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_6layer_untied_calibration_sweeps_tmux.sh)
+
+Run in tmux:
+
+```bash
+export SPD_OUT_DIR="$PWD/spd_out"
+bash koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_6layer_untied_calibration_sweeps_tmux.sh
+```
+
+## 6-Layer Untied Faithfulness And PGD Sweeps
+
+This folder also contains a focused reuse-target sweep on the saved
+`exp_07_tms_5_2_6layer_untied` target checkpoint to test whether adding a small training-time
+`PGDReconLoss` improves scale recovery in the hard `6L` untied setting.
+
+Runs:
+
+- `exp_07_tms_5_2_6layer_untied_f075_p2to15_pgd010`
+- `exp_07_tms_5_2_6layer_untied_f075_p2to15_pgd025`
+- `exp_07_tms_5_2_6layer_untied_f100_p2to15_pgd010`
+- `exp_07_tms_5_2_6layer_untied_f100_p2to15_pgd025`
+
+These use:
+
+- `FaithfulnessLoss coeff in {0.75, 1.0}`
+- `ImportanceMinimalityLoss p_anneal 2.0 -> 1.5`
+- `PGDReconLoss coeff in {0.10, 0.25}`
+- training PGD settings `init=random`, `step_size=1.0`, `n_steps=1`,
+  `mask_scope=shared_across_batch`
+
+Files:
+
+- batch config: [exp_07_6layer_untied_faithfulness_pgd_sweeps.yaml](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/exp_07_6layer_untied_faithfulness_pgd_sweeps.yaml)
+- runner: [run_exp_07_4layer_untied_loss_ablations.py](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/run_exp_07_4layer_untied_loss_ablations.py)
+- tmux launcher: [launch_6layer_untied_faithfulness_pgd_sweeps_tmux.sh](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_6layer_untied_faithfulness_pgd_sweeps_tmux.sh)
+
+Run in tmux:
+
+```bash
+export SPD_OUT_DIR="$PWD/spd_out"
+bash koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_6layer_untied_faithfulness_pgd_sweeps_tmux.sh
+```
+
+## 6-Layer Untied Fixed-P Paper Follow-Up
+
+This folder also contains a single reuse-target follow-up on the saved
+`exp_07_tms_5_2_6layer_untied` target checkpoint that combines the best-performing PGD and
+faithfulness settings from the previous `6L` PGD sweep with paper-style fixed `pnorm=1.0`.
+
+Run:
+
+- `exp_07_tms_5_2_6layer_untied_f100_p1fixed_pgd025`
+
+This uses:
+
+- `FaithfulnessLoss coeff=1.0`
+- `ImportanceMinimalityLoss coeff=3e-3`
+- `ImportanceMinimalityLoss pnorm=1.0`
+- no `p`-annealing
+- `PGDReconLoss coeff=0.25`
+
+Files:
+
+- batch config: [exp_07_6layer_untied_fixedp_paper_faithfulness_pgd.yaml](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/exp_07_6layer_untied_fixedp_paper_faithfulness_pgd.yaml)
+- runner: [run_exp_07_4layer_untied_loss_ablations.py](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/run_exp_07_4layer_untied_loss_ablations.py)
+- tmux launcher: [launch_6layer_untied_fixedp_paper_faithfulness_pgd_tmux.sh](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_6layer_untied_fixedp_paper_faithfulness_pgd_tmux.sh)
+
+Run in tmux:
+
+```bash
+export SPD_OUT_DIR="$PWD/spd_out"
+bash koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_6layer_untied_fixedp_paper_faithfulness_pgd_tmux.sh
+```
