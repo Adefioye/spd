@@ -126,11 +126,12 @@ Run artifacts are written under `SPD_OUT_DIR`:
 
 - target checkpoints: `SPD_OUT_DIR/train/<run_id>/`
 - SPD runs: `SPD_OUT_DIR/spd/<run_id>/`
-- rich analysis JSONs: `SPD_OUT_DIR/parameter_recovery/results/<run_name>_<timestamp>/`
+- rich analysis JSONs: `SPD_OUT_DIR/parameter_recovery/results/<run_name>_<timestamp>_parameter_recovery_analysis.json`
 
-Each result bundle contains:
+Each saved result is a single JSON file:
 
-- the batch manifest
-- the exact materialized target config
-- the exact materialized SPD config
-- `<run_name>_parameter_recovery_analysis.json`
+- `<run_name>_<timestamp>_parameter_recovery_analysis.json`
+
+The exact batch, target, and SPD configs are still materialized under:
+
+- `koko_experiments/parameter_recovery/experiments/exp_08_tms_40_10_depth_untied_extension/materialized_configs/<run_name>/`

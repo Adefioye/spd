@@ -1,0 +1,44 @@
+{
+  "run_name": "exp_07_tms_5_2_2layer_tied",
+  "target_model_type": "tms",
+  "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-a522e58a",
+  "target_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/train/t-d8afbb7b/tms.pth",
+  "summary": {
+    "recovery_metrics": {
+      "mmcs": 0.9114192724227905,
+      "ml2r": 0.6694715619087219
+    },
+    "faithfulness_mse": 1.0759602082544006e-05,
+    "ci_summary": {
+      "linear1": {
+        "mean_top1_ci": 0.7736355066299438,
+        "mean_ci_entropy": 0.0
+      },
+      "linear2": {
+        "mean_top1_ci": 0.7889729738235474,
+        "mean_ci_entropy": 0.0
+      }
+    }
+  },
+  "losses": {
+    "train/loss/total": 0.0009465542389079928,
+    "loss/ImportanceMinimalityLoss": 0.2881395220756531,
+    "loss/StochasticReconLoss": 7.305145118152723e-05,
+    "loss/StochasticHiddenActsReconLoss": 0.0033366570714861155,
+    "loss/StochasticReconLayerwiseLoss": 3.4449578379280865e-05
+  },
+  "layers": [
+    {
+      "layer_name": "linear1",
+      "mmcs": 0.9975157976150513,
+      "ml2r": 0.6523395776748657,
+      "faithfulness_mse": 1.0759601536847185e-05
+    },
+    {
+      "layer_name": "linear2",
+      "mmcs": 0.6961778402328491,
+      "ml2r": 0.7123016715049744,
+      "faithfulness_mse": 1.0759602446341887e-05
+    }
+  ]
+}

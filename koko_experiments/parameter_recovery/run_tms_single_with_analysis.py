@@ -2,7 +2,6 @@
 
 import argparse
 import json
-import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -19,11 +18,10 @@ from spd.settings import SPD_OUT_DIR
 from spd.utils.run_utils import generate_run_id
 
 
-def _timestamped_dir(base: Path, name: str) -> Path:
+def _analysis_output_path(base: Path, name: str) -> Path:
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    out_dir = base / f"{name}_{stamp}"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    return out_dir
+    base.mkdir(parents=True, exist_ok=True)
+    return base / f"{name}_{stamp}_parameter_recovery_analysis.json"
 
 
 def _parse_args() -> argparse.Namespace:
@@ -57,13 +55,12 @@ def main() -> None:
     spd_out_path = spd_run_dir / "parameter_recovery_analysis.json"
     spd_out_path.write_text(json.dumps(analysis_payload, indent=2, default=str))
 
-    result_root = _timestamped_dir(SPD_OUT_DIR / "parameter_recovery" / "results", experiment_name)
-    shutil.copy2(config_path, result_root / config_path.name)
-    analysis_path = result_root / f"{experiment_name}_parameter_recovery_analysis.json"
+    analysis_path = _analysis_output_path(
+        SPD_OUT_DIR / "parameter_recovery" / "results", experiment_name
+    )
     analysis_path.write_text(json.dumps(analysis_payload, indent=2, default=str))
 
     print(f"spd_out_path={spd_out_path}")
-    print(f"result_root={result_root}")
     print(f"analysis_path={analysis_path}")
 
 

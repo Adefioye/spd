@@ -40,7 +40,7 @@ Shared SPD settings:
 - `ImportanceMinimalityLoss coeff=3e-3, pnorm=1`
 - `StochasticReconLoss coeff=1`
 - `StochasticReconLayerwiseLoss coeff=1`
-- 10k SPD steps on CPU
+- 40k SPD steps on CPU
 
 All runs log to the single W&B project declared in
 [exp_07_batch.yaml](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/exp_07_batch.yaml).
@@ -101,11 +101,11 @@ python koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_
 
 Behavior:
 
-- looks up the most recent saved target checkpoint for each base `exp_07` run under `SPD_OUT_DIR/parameter_recovery/results/`
+- looks up the most recent saved analysis JSON for each base `exp_07` run under `SPD_OUT_DIR/parameter_recovery/results/`
 - skips target retraining entirely
 - keeps `wandb_project` from [exp_07_batch.yaml](/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/exp_07_batch.yaml)
 - sets `wandb_run_name` to `<base_run_name>_steps40000`
-- writes result bundles under `SPD_OUT_DIR/parameter_recovery/results/<base_run_name>_steps40000_<timestamp>/`
+- writes analysis JSONs under `SPD_OUT_DIR/parameter_recovery/results/<base_run_name>_steps40000_<timestamp>_parameter_recovery_analysis.json`
 
 ## Outputs
 
@@ -117,15 +117,59 @@ Run artifacts are written under `SPD_OUT_DIR`:
 
 - target checkpoints: `SPD_OUT_DIR/train/<run_id>/` via the shared TMS trainer
 - SPD runs: `SPD_OUT_DIR/spd/<run_id>/`
-- rich analysis JSONs: `SPD_OUT_DIR/parameter_recovery/results/<run_name>_<timestamp>/`
+- rich analysis JSONs: `SPD_OUT_DIR/parameter_recovery/results/<run_name>_<timestamp>_parameter_recovery_analysis.json`
 
-Each result bundle contains:
+Each saved result is a single JSON file:
 
-- the batch manifest
-- the exact materialized target config
-- the exact materialized SPD config
-- `<run_name>_parameter_recovery_analysis.json`
+- `<run_name>_<timestamp>_parameter_recovery_analysis.json`
+
+The exact batch, target, and SPD configs are still materialized under:
+
+- `koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/materialized_configs/<run_name>/`
 
 The most recent batch index is also written to:
 
 - `materialized_configs/latest_run_index.json`
+
+## Delta-Component Shrinkage Ablation
+
+This folder also includes a dedicated 5-layer and 6-layer untied ablation for investigating
+shrinkage under `use_delta_component` and `FaithfulnessLoss`.
+
+The six runs are:
+
+- `exp_07_tms_5_2_5layer_untied_deltaon_nofaith_steps40000`
+- `exp_07_tms_5_2_5layer_untied_deltaoff_faith_steps40000`
+- `exp_07_tms_5_2_5layer_untied_deltaon_faith_steps40000`
+- `exp_07_tms_5_2_6layer_untied_deltaon_nofaith_steps40000`
+- `exp_07_tms_5_2_6layer_untied_deltaoff_faith_steps40000`
+- `exp_07_tms_5_2_6layer_untied_deltaon_faith_steps40000`
+
+These runs keep the paper-style TMS 5-2 SPD settings for the non-ablated terms:
+
+- `ImportanceMinimalityLoss coeff=3e-3, pnorm=1`
+- `StochasticReconLoss coeff=1`
+- `StochasticReconLayerwiseLoss coeff=1`
+- `C=20` per decomposed layer
+- CI MLP hidden width `16`
+- cosine LR schedule from `1e-3`
+- `40_000` SPD steps
+
+Variant definitions:
+
+- `deltaon_nofaith`: `use_delta_component: true` with no `FaithfulnessLoss`
+- `deltaoff_faith`: `use_delta_component: false` with `FaithfulnessLoss coeff=1`
+- `deltaon_faith`: `use_delta_component: true` with `FaithfulnessLoss coeff=1`
+
+Launch the full ablation batch in `tmux` from the repo root:
+
+```bash
+bash koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/launch_delta_component_shrinkage_tmux.sh
+```
+
+This launcher:
+
+- exports `SPD_OUT_DIR="$PWD/spd_out"`
+- forces CPU execution with `CUDA_VISIBLE_DEVICES=''`
+- runs the six experiments sequentially in one detached `tmux` session
+- writes a dedicated log file into `logs/`

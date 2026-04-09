@@ -1,0 +1,75 @@
+{
+  "run_name": "exp_07_tms_5_2_5layer_untied_deltaon_nofaith_steps40000",
+  "target_model_type": "tms",
+  "spd_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-2590e9ba",
+  "target_run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/train/t-0580d991/tms.pth",
+  "summary": {
+    "recovery_metrics": {
+      "mmcs": 0.8944520354270935,
+      "ml2r": 0.7132874727249146
+    },
+    "faithfulness_mse": 0.0002462568777445995,
+    "ci_summary": {
+      "hidden_layers.0": {
+        "mean_top1_ci": 0.5784720182418823,
+        "mean_ci_entropy": 0.0
+      },
+      "hidden_layers.1": {
+        "mean_top1_ci": 0.6000000238418579,
+        "mean_ci_entropy": 0.0
+      },
+      "hidden_layers.2": {
+        "mean_top1_ci": 0.6000000238418579,
+        "mean_ci_entropy": 0.0
+      },
+      "linear1": {
+        "mean_top1_ci": 0.5644232034683228,
+        "mean_ci_entropy": 0.00024682687944732606
+      },
+      "linear2": {
+        "mean_top1_ci": 0.5486224293708801,
+        "mean_ci_entropy": 0.0
+      }
+    }
+  },
+  "losses": {
+    "train/loss/total": 0.0015492438105866313,
+    "loss/StochasticHiddenActsReconLoss": 0.0032725136261433363,
+    "loss/FaithfulnessLoss": 0.0009928712388500571,
+    "loss/StochasticReconLayerwiseLoss": 5.759143823524937e-05,
+    "loss/ImportanceMinimalityLoss": 0.46531546115875244,
+    "loss/StochasticReconLoss": 0.00021605391521006823
+  },
+  "layers": [
+    {
+      "layer_name": "linear1",
+      "mmcs": 0.993404746055603,
+      "ml2r": 0.8964378237724304,
+      "faithfulness_mse": 0.00016327094635926187
+    },
+    {
+      "layer_name": "linear2",
+      "mmcs": 0.7332010865211487,
+      "ml2r": 0.7384224534034729,
+      "faithfulness_mse": 0.0005680644535459578
+    },
+    {
+      "layer_name": "hidden_layers.0",
+      "mmcs": 0.8104656934738159,
+      "ml2r": 0.8151649236679077,
+      "faithfulness_mse": 4.1092949686571956e-05
+    },
+    {
+      "layer_name": "hidden_layers.1",
+      "mmcs": 0.9191519021987915,
+      "ml2r": 0.3643324673175812,
+      "faithfulness_mse": 8.198420982807875e-05
+    },
+    {
+      "layer_name": "hidden_layers.2",
+      "mmcs": 0.867607831954956,
+      "ml2r": 0.47735440731048584,
+      "faithfulness_mse": 1.8639406334841624e-05
+    }
+  ]
+}

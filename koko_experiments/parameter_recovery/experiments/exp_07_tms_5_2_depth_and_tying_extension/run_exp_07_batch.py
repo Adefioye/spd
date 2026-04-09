@@ -2,7 +2,6 @@
 
 import argparse
 import json
-import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -35,11 +34,10 @@ class Exp07BatchConfig(BaseConfig):
     runs: list[Exp07RunSpec]
 
 
-def _timestamped_dir(base: Path, name: str) -> Path:
+def _analysis_output_path(base: Path, name: str) -> Path:
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    out_dir = base / f"{name}_{stamp}"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    return out_dir
+    base.mkdir(parents=True, exist_ok=True)
+    return base / f"{name}_{stamp}_parameter_recovery_analysis.json"
 
 
 def _parse_args() -> argparse.Namespace:
@@ -114,9 +112,9 @@ def _run_name_with_suffix(run_name: str, suffix: str) -> str:
 def _find_existing_target_checkpoint(run_name: str) -> Path:
     result_root = SPD_OUT_DIR / "parameter_recovery" / "results"
     candidate_paths = sorted(
-        result_root.glob(f"{run_name}_*/{run_name}_parameter_recovery_analysis.json")
+        result_root.glob(f"{run_name}_*_parameter_recovery_analysis.json")
     )
-    assert candidate_paths, f"No saved analysis bundles found for {run_name} under {result_root}"
+    assert candidate_paths, f"No saved analysis JSONs found for {run_name} under {result_root}"
 
     latest_path = candidate_paths[-1]
     analysis_payload = json.loads(latest_path.read_text())
@@ -171,20 +169,13 @@ def _run_spd_for_target(target_checkpoint_path: Path, spd_config: Config) -> Pat
 
 def _save_run_outputs(
     run_name: str,
-    source_batch_config: Path,
-    target_config_path: Path,
-    spd_config_path: Path,
     spd_run_dir: Path,
 ) -> Path:
     analysis_payload = analyze_tms_spd_run(spd_run_dir=spd_run_dir, run_name=run_name)
     spd_out_path = spd_run_dir / "parameter_recovery_analysis.json"
     spd_out_path.write_text(json.dumps(analysis_payload, indent=2, default=str))
 
-    result_root = _timestamped_dir(SPD_OUT_DIR / "parameter_recovery" / "results", run_name)
-    shutil.copy2(source_batch_config, result_root / source_batch_config.name)
-    shutil.copy2(target_config_path, result_root / target_config_path.name)
-    shutil.copy2(spd_config_path, result_root / spd_config_path.name)
-    analysis_path = result_root / f"{run_name}_parameter_recovery_analysis.json"
+    analysis_path = _analysis_output_path(SPD_OUT_DIR / "parameter_recovery" / "results", run_name)
     analysis_path.write_text(json.dumps(analysis_payload, indent=2, default=str))
     print(f"analysis_path={analysis_path}")
     return analysis_path
@@ -258,9 +249,6 @@ def main() -> None:
 
         analysis_path = _save_run_outputs(
             run_name=effective_run_name,
-            source_batch_config=config_path,
-            target_config_path=target_config_path,
-            spd_config_path=spd_config_path,
             spd_run_dir=spd_run_dir,
         )
         summary_rows.append(
