@@ -270,13 +270,14 @@ def heatmap(
     ax.set_yticks(np.arange(len(row_labels)), labels=row_labels)
     ax.set_title(title)
     if annotate:
-        matrix_min = np.nanmin(matrix)
-        matrix_max = np.nanmax(matrix)
-        threshold = matrix_min + 0.55 * (matrix_max - matrix_min) if matrix_max > matrix_min else matrix_min
         for row_idx in range(matrix.shape[0]):
             for col_idx in range(matrix.shape[1]):
                 value = matrix[row_idx, col_idx]
-                text_color = "white" if value >= threshold else "#111111"
+                if np.isnan(value):
+                    continue
+                rgba = im.cmap(im.norm(value))
+                luminance = 0.299 * rgba[0] + 0.587 * rgba[1] + 0.114 * rgba[2]
+                text_color = "white" if luminance < 0.55 else "#111111"
                 ax.text(
                     col_idx,
                     row_idx,
