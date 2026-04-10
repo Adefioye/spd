@@ -1,0 +1,70 @@
+{
+  "functional_ratio_depth2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_ratio_depth2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_ratio_depth2.pdf"
+  },
+  "functional_contraction_depth2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_contraction_depth2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_contraction_depth2.pdf"
+  },
+  "functional_mse_depth2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_mse_depth2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_mse_depth2.pdf"
+  },
+  "functional_ratio_depth3": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_ratio_depth3.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_ratio_depth3.pdf"
+  },
+  "functional_contraction_depth3": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_contraction_depth3.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_contraction_depth3.pdf"
+  },
+  "functional_mse_depth3": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_mse_depth3.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_mse_depth3.pdf"
+  },
+  "functional_ratio_depth4": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_ratio_depth4.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_ratio_depth4.pdf"
+  },
+  "functional_contraction_depth4": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_contraction_depth4.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_contraction_depth4.pdf"
+  },
+  "functional_mse_depth4": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_mse_depth4.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_mse_depth4.pdf"
+  },
+  "functional_ratio_depth5": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_ratio_depth5.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_ratio_depth5.pdf"
+  },
+  "functional_contraction_depth5": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_contraction_depth5.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_contraction_depth5.pdf"
+  },
+  "functional_mse_depth5": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_mse_depth5.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_mse_depth5.pdf"
+  },
+  "functional_ratio_depth6": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_ratio_depth6.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_ratio_depth6.pdf"
+  },
+  "functional_contraction_depth6": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_contraction_depth6.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_contraction_depth6.pdf"
+  },
+  "functional_mse_depth6": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_mse_depth6.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_mse_depth6.pdf"
+  },
+  "functional_heatmap_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_heatmap_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_heatmap_tied.pdf"
+  },
+  "functional_heatmap_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_heatmap_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/functional/functional_heatmap_untied.pdf"
+  }
+}

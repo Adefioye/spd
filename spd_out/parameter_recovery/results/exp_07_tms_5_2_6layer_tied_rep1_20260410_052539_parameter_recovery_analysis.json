@@ -1,0 +1,84 @@
+{
+  "run_name": "exp_07_tms_5_2_6layer_tied_rep1",
+  "target_model_type": "tms",
+  "spd_run_dir": "/workspace/spd/spd_out/spd/s-18d68bf8",
+  "target_run_dir": "/workspace/spd/spd_out/train/t-35210e0a/tms.pth",
+  "summary": {
+    "recovery_metrics": {
+      "mmcs": 0.9343560338020325,
+      "ml2r": 0.368196040391922
+    },
+    "faithfulness_mse": 0.0006909314304013808,
+    "ci_summary": {
+      "hidden_layers.0": {
+        "mean_top1_ci": 0.800000011920929,
+        "mean_ci_entropy": 0.0
+      },
+      "hidden_layers.1": {
+        "mean_top1_ci": 0.800000011920929,
+        "mean_ci_entropy": 0.0
+      },
+      "hidden_layers.2": {
+        "mean_top1_ci": 0.800000011920929,
+        "mean_ci_entropy": 0.0
+      },
+      "hidden_layers.3": {
+        "mean_top1_ci": 0.800000011920929,
+        "mean_ci_entropy": 0.0
+      },
+      "linear1": {
+        "mean_top1_ci": 0.800000011920929,
+        "mean_ci_entropy": 0.0
+      },
+      "linear2": {
+        "mean_top1_ci": 0.800000011920929,
+        "mean_ci_entropy": 0.0
+      }
+    }
+  },
+  "losses": {
+    "train/loss/total": 0.0031330708879977465,
+    "loss/ImportanceMinimalityLoss": 0.7999537587165833,
+    "loss/StochasticReconLoss": 0.00033126684138551354,
+    "loss/StochasticReconLayerwiseLoss": 8.105226152110845e-05,
+    "loss/StochasticHiddenActsReconLoss": 0.0020846205297857523
+  },
+  "layers": [
+    {
+      "layer_name": "linear1",
+      "mmcs": 0.9994928240776062,
+      "ml2r": 0.6707519888877869,
+      "faithfulness_mse": 0.0012360654072836041
+    },
+    {
+      "layer_name": "linear2",
+      "mmcs": 0.6300277709960938,
+      "ml2r": 0.636143684387207,
+      "faithfulness_mse": 0.0012360654072836041
+    },
+    {
+      "layer_name": "hidden_layers.0",
+      "mmcs": 0.9635096788406372,
+      "ml2r": 0.4464029371738434,
+      "faithfulness_mse": 4.903883564111311e-06
+    },
+    {
+      "layer_name": "hidden_layers.1",
+      "mmcs": 0.9518464803695679,
+      "ml2r": 0.0006548833916895092,
+      "faithfulness_mse": 1.1581294529605657e-05
+    },
+    {
+      "layer_name": "hidden_layers.2",
+      "mmcs": 0.9660873413085938,
+      "ml2r": 0.0010873624123632908,
+      "faithfulness_mse": 1.9320499632158317e-05
+    },
+    {
+      "layer_name": "hidden_layers.3",
+      "mmcs": 0.997467577457428,
+      "ml2r": 0.0003014045360032469,
+      "faithfulness_mse": 2.250275883852737e-06
+    }
+  ]
+}

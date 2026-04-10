@@ -123,6 +123,12 @@ Each saved result is a single JSON file:
 
 - `<run_name>_<timestamp>_parameter_recovery_analysis.json`
 
+When replicate runs are used, the batch runner also writes aggregate summaries under
+`SPD_OUT_DIR/parameter_recovery/results/` for:
+
+- `linear1`: layer-specific `MMCS` and `ML2R`
+- `other_layers`: per-run averages of `MMCS` and `ML2R` across every analyzed layer except `linear1`
+
 The exact batch, target, and SPD configs are still materialized under:
 
 - `koko_experiments/parameter_recovery/experiments/exp_07_tms_5_2_depth_and_tying_extension/materialized_configs/<run_name>/`

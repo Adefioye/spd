@@ -14,8 +14,10 @@ tmux new-session -d -s "$SESSION_NAME" \
   "cd \"$REPO_ROOT\" && \
    source .venv/bin/activate && \
    export SPD_OUT_DIR=\"\$PWD/spd_out\" && \
-   export CUDA_VISIBLE_DEVICES='' && \
-   python \"$EXPERIMENT_DIR/run_exp_07_batch.py\" \"$EXPERIMENT_DIR/exp_07_batch.yaml\" 2>&1 | tee \"$LOG_PATH\""
+   python \"$EXPERIMENT_DIR/run_exp_07_batch.py\" \"$EXPERIMENT_DIR/exp_07_batch.yaml\" \
+     --device cuda \
+     --spd-replicates 3 \
+     2>&1 | tee \"$LOG_PATH\""
 
 echo "session_name=$SESSION_NAME"
 echo "log_path=$LOG_PATH"

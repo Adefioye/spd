@@ -1,0 +1,54 @@
+{
+  "layer1_raw_ratio_vs_depth": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_raw_ratio_vs_depth.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_raw_ratio_vs_depth.pdf"
+  },
+  "layer1_raw_under_scaling_vs_depth": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_raw_under_scaling_vs_depth.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_raw_under_scaling_vs_depth.pdf"
+  },
+  "layer1_ci_attenuation_vs_depth": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_ci_attenuation_vs_depth.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_ci_attenuation_vs_depth.pdf"
+  },
+  "layer1_output_contraction_vs_depth": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_output_contraction_vs_depth.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_output_contraction_vs_depth.pdf"
+  },
+  "layer1_jacobian_contraction_vs_depth": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_jacobian_contraction_vs_depth.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_jacobian_contraction_vs_depth.pdf"
+  },
+  "layer1_ml2r_vs_depth": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_ml2r_vs_depth.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_ml2r_vs_depth.pdf"
+  },
+  "layer1_ml2r_gap_vs_depth": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_ml2r_gap_vs_depth.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_ml2r_gap_vs_depth.pdf"
+  },
+  "layer1_paper_shrinkage_rate_vs_depth": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_paper_shrinkage_rate_vs_depth.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_paper_shrinkage_rate_vs_depth.pdf"
+  },
+  "ml2r_onset_heatmap_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/ml2r_onset_heatmap_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/ml2r_onset_heatmap_tied.pdf"
+  },
+  "ml2r_onset_heatmap_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/ml2r_onset_heatmap_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/ml2r_onset_heatmap_untied.pdf"
+  },
+  "layer1_summary_heatmap_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_summary_heatmap_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_summary_heatmap_tied.pdf"
+  },
+  "layer1_summary_heatmap_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_summary_heatmap_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/layer1_summary_heatmap_untied.pdf"
+  },
+  "reframed_summary_panel": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/reframed_summary_panel.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/summary/reframed_summary_panel.pdf"
+  }
+}

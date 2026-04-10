@@ -1,0 +1,258 @@
+{
+  "ci_summary_depth2_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth2_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth2_tied.pdf"
+  },
+  "attenuation_depth2_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth2_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth2_tied.pdf"
+  },
+  "ci_summary_depth2_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth2_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth2_untied.pdf"
+  },
+  "attenuation_depth2_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth2_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth2_untied.pdf"
+  },
+  "ci_summary_depth3_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth3_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth3_tied.pdf"
+  },
+  "attenuation_depth3_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth3_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth3_tied.pdf"
+  },
+  "ci_summary_depth3_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth3_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth3_untied.pdf"
+  },
+  "attenuation_depth3_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth3_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth3_untied.pdf"
+  },
+  "ci_summary_depth4_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth4_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth4_tied.pdf"
+  },
+  "attenuation_depth4_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth4_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth4_tied.pdf"
+  },
+  "ci_summary_depth4_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth4_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth4_untied.pdf"
+  },
+  "attenuation_depth4_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth4_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth4_untied.pdf"
+  },
+  "ci_summary_depth5_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth5_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth5_tied.pdf"
+  },
+  "attenuation_depth5_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth5_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth5_tied.pdf"
+  },
+  "ci_summary_depth5_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth5_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth5_untied.pdf"
+  },
+  "attenuation_depth5_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth5_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth5_untied.pdf"
+  },
+  "ci_summary_depth6_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth6_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth6_tied.pdf"
+  },
+  "attenuation_depth6_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth6_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth6_tied.pdf"
+  },
+  "ci_summary_depth6_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth6_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_summary_depth6_untied.pdf"
+  },
+  "attenuation_depth6_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth6_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_depth6_untied.pdf"
+  },
+  "masked_heatmap_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/masked_heatmap_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/masked_heatmap_tied.pdf"
+  },
+  "attenuation_heatmap_tied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_heatmap_tied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_heatmap_tied.pdf"
+  },
+  "masked_heatmap_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/masked_heatmap_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/masked_heatmap_untied.pdf"
+  },
+  "attenuation_heatmap_untied": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_heatmap_untied.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/attenuation_heatmap_untied.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_2layer_tied_rep1_linear1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_2layer_tied_rep1_linear1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_2layer_tied_rep1_linear1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_2layer_tied_rep1_linear2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_2layer_tied_rep1_linear2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_2layer_tied_rep1_linear2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_2layer_untied_rep1_linear1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_2layer_untied_rep1_linear1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_2layer_untied_rep1_linear1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_2layer_untied_rep1_linear2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_2layer_untied_rep1_linear2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_2layer_untied_rep1_linear2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_3layer_tied_rep1_linear1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_tied_rep1_linear1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_tied_rep1_linear1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_3layer_tied_rep1_hidden_layers.0": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_tied_rep1_hidden_layers_0.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_tied_rep1_hidden_layers_0.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_3layer_tied_rep1_linear2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_tied_rep1_linear2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_tied_rep1_linear2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_3layer_untied_rep1_linear1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_untied_rep1_linear1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_untied_rep1_linear1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_3layer_untied_rep1_hidden_layers.0": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_untied_rep1_hidden_layers_0.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_untied_rep1_hidden_layers_0.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_3layer_untied_rep1_linear2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_untied_rep1_linear2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_3layer_untied_rep1_linear2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_4layer_tied_rep1_linear1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_tied_rep1_linear1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_tied_rep1_linear1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_4layer_tied_rep1_hidden_layers.0": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_tied_rep1_hidden_layers_0.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_tied_rep1_hidden_layers_0.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_4layer_tied_rep1_hidden_layers.1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_tied_rep1_hidden_layers_1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_tied_rep1_hidden_layers_1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_4layer_tied_rep1_linear2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_tied_rep1_linear2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_tied_rep1_linear2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_4layer_untied_rep1_linear1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_untied_rep1_linear1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_untied_rep1_linear1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_4layer_untied_rep1_hidden_layers.0": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_untied_rep1_hidden_layers_0.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_untied_rep1_hidden_layers_0.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_4layer_untied_rep1_hidden_layers.1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_untied_rep1_hidden_layers_1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_untied_rep1_hidden_layers_1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_4layer_untied_rep1_linear2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_untied_rep1_linear2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_4layer_untied_rep1_linear2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_5layer_tied_rep1_linear1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_tied_rep1_linear1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_tied_rep1_linear1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_5layer_tied_rep1_hidden_layers.0": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_tied_rep1_hidden_layers_0.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_tied_rep1_hidden_layers_0.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_5layer_tied_rep1_hidden_layers.1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_tied_rep1_hidden_layers_1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_tied_rep1_hidden_layers_1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_5layer_tied_rep1_hidden_layers.2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_tied_rep1_hidden_layers_2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_tied_rep1_hidden_layers_2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_5layer_tied_rep1_linear2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_tied_rep1_linear2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_tied_rep1_linear2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_5layer_untied_rep1_linear1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_untied_rep1_linear1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_untied_rep1_linear1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_5layer_untied_rep1_hidden_layers.0": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_untied_rep1_hidden_layers_0.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_untied_rep1_hidden_layers_0.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_5layer_untied_rep1_hidden_layers.1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_untied_rep1_hidden_layers_1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_untied_rep1_hidden_layers_1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_5layer_untied_rep1_hidden_layers.2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_untied_rep1_hidden_layers_2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_untied_rep1_hidden_layers_2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_5layer_untied_rep1_linear2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_untied_rep1_linear2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_5layer_untied_rep1_linear2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_tied_rep1_linear1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_linear1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_linear1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers.0": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers_0.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers_0.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers.1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers_1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers_1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers.2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers_2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers_2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers.3": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers_3.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_hidden_layers_3.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_tied_rep1_linear2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_linear2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_tied_rep1_linear2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_untied_rep1_linear1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_linear1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_linear1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers.0": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers_0.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers_0.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers.1": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers_1.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers_1.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers.2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers_2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers_2.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers.3": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers_3.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_hidden_layers_3.pdf"
+  },
+  "ci_hist_exp_07_tms_5_2_6layer_untied_rep1_linear2": {
+    "png": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_linear2.png",
+    "pdf": "/workspace/spd/important_outputs/shrinkage_analysis_rep1/plots/ci_mask/ci_hist_exp_07_tms_5_2_6layer_untied_rep1_linear2.pdf"
+  }
+}

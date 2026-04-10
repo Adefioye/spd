@@ -1,4 +1,4 @@
-wandb_project: spd_tms_5_2_exp07
+wandb_project: spd_tms_5_2_exp07_single_gpu
 runs:
   - run_name: exp_07_tms_5_2_2layer_tied
     target_config:

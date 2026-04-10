@@ -1,0 +1,74 @@
+{
+  "run_name": "exp_07_tms_5_2_5layer_tied_rep2",
+  "target_model_type": "tms",
+  "spd_run_dir": "/workspace/spd/spd_out/spd/s-76ec8762",
+  "target_run_dir": "/workspace/spd/spd_out/train/t-67b754ef/tms.pth",
+  "summary": {
+    "recovery_metrics": {
+      "mmcs": 0.9196566343307495,
+      "ml2r": 0.5580557584762573
+    },
+    "faithfulness_mse": 5.176493991143616e-05,
+    "ci_summary": {
+      "hidden_layers.0": {
+        "mean_top1_ci": 1.0,
+        "mean_ci_entropy": 0.4152194857597351
+      },
+      "hidden_layers.1": {
+        "mean_top1_ci": 1.0,
+        "mean_ci_entropy": 0.4070854187011719
+      },
+      "hidden_layers.2": {
+        "mean_top1_ci": 1.0,
+        "mean_ci_entropy": 0.4532445967197418
+      },
+      "linear1": {
+        "mean_top1_ci": 1.0,
+        "mean_ci_entropy": 0.0
+      },
+      "linear2": {
+        "mean_top1_ci": 1.0,
+        "mean_ci_entropy": 0.4245770573616028
+      }
+    }
+  },
+  "losses": {
+    "train/loss/total": 0.0037324584554880857,
+    "loss/ImportanceMinimalityLoss": 0.9467054605484009,
+    "loss/StochasticReconLoss": 0.0004866026865784079,
+    "loss/StochasticReconLayerwiseLoss": 0.00028813534299843013,
+    "loss/StochasticHiddenActsReconLoss": 0.00791082251816988
+  },
+  "layers": [
+    {
+      "layer_name": "linear1",
+      "mmcs": 0.9987571835517883,
+      "ml2r": 1.0303010940551758,
+      "faithfulness_mse": 6.316035432973877e-05
+    },
+    {
+      "layer_name": "linear2",
+      "mmcs": 0.6180264949798584,
+      "ml2r": 0.6345000267028809,
+      "faithfulness_mse": 6.316036160569638e-05
+    },
+    {
+      "layer_name": "hidden_layers.0",
+      "mmcs": 0.9895663261413574,
+      "ml2r": 0.0005567709449678659,
+      "faithfulness_mse": 1.1079777323175222e-05
+    },
+    {
+      "layer_name": "hidden_layers.1",
+      "mmcs": 0.9460693001747131,
+      "ml2r": 0.0003760365943890065,
+      "faithfulness_mse": 8.460977551294491e-05
+    },
+    {
+      "layer_name": "hidden_layers.2",
+      "mmcs": 0.927213191986084,
+      "ml2r": 0.4161766767501831,
+      "faithfulness_mse": 2.628187530717696e-06
+    }
+  ]
+}
