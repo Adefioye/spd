@@ -1,0 +1,10 @@
+{
+  "run_id": "s-09840b4e",
+  "run_dir": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/spd_out/spd/s-09840b4e",
+  "wandb_project": "spd_tms_5_2_exp09",
+  "wandb_run_name": "exp_09_tms_5_2_cpu_paper",
+  "materialized_config_path": "/Users/abdulhakeemadefioye/Desktop/deep-learning/koko_spd/koko_experiments/parameter_recovery/experiments/exp_09_tms_5_2_cpu_paper_repro/materialized_configs/exp_09_tms_5_2_cpu_paper.yaml",
+  "steps": 10000,
+  "posthoc_upload_step": null,
+  "created_at_utc": "2026-04-12T01:14:44.530733+00:00"
+}
